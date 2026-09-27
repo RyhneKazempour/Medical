@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Domain\Shared.Domain.csproj" />
+    <ProjectReference Include="..\..\Medical\Medical.Domain\Medical.Domain.csproj" />
+    <ProjectReference Include="..\..\Scheduling\Scheduling.Domain\Scheduling.Domain.csproj" />
+  </ItemGroup>
+</Project>
