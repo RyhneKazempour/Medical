@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Appointments.Domain.Entities;
 using MyApp.Appointments.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class AppointmentsDbContext : DbContext, IUnitOfWork
 {
@@ -15,7 +16,7 @@ public sealed class AppointmentsDbContext : DbContext, IUnitOfWork
     {
         modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
 
-        modelBuilder.Entity<Appointment>().HasQueryFilter(a => !a.IsDeleted);
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }

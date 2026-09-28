@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Scheduling.Domain.Entities;
 using MyApp.Scheduling.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class SchedulingDbContext : DbContext, IUnitOfWork
 {
@@ -19,10 +20,7 @@ public sealed class SchedulingDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new DoctorScheduleExceptionConfiguration());
         modelBuilder.ApplyConfiguration(new AppointmentSlotConfiguration());
 
-        // Global query filters for soft delete
-        modelBuilder.Entity<DoctorSchedule>().HasQueryFilter(ds => !ds.IsDeleted);
-        modelBuilder.Entity<DoctorScheduleException>().HasQueryFilter(dse => !dse.IsDeleted);
-        modelBuilder.Entity<AppointmentSlot>().HasQueryFilter(a => !a.IsDeleted);
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }

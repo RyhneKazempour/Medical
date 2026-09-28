@@ -29,19 +29,6 @@ internal sealed class RoleRepository : IRoleRepository
         return await _dbContext.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.Name == name, cancellationToken);
     }
 
-    public async Task<IReadOnlyList<Role>> GetByContextAsync(string? contextType, Guid? contextId, CancellationToken cancellationToken = default)
-    {
-        var query = _dbContext.Roles.AsNoTracking().Where(r => r.IsActive);
-
-        if (contextType is not null)
-            query = query.Where(r => r.ContextType == contextType);
-
-        if (contextId.HasValue)
-            query = query.Where(r => r.ContextId == contextId.Value);
-
-        return await query.OrderBy(r => r.Name).ToListAsync(cancellationToken);
-    }
-
     public async Task AddAsync(Role entity, CancellationToken cancellationToken = default)
     {
         await _dbContext.Roles.AddAsync(entity, cancellationToken);
