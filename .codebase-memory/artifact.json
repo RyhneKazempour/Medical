@@ -1,0 +1,11 @@
+{
+    "schema_version": 2,
+    "commit": "7f9bd60f384f2ddcbb67d0b0ec5247a8d3f5b7ab",
+    "indexed_at": "2026-09-28T06:16:41Z",
+    "project": "Medical",
+    "nodes": 1278,
+    "edges": 4201,
+    "original_size": 4456448,
+    "compressed_size": 509360,
+    "compression_level": 9
+}

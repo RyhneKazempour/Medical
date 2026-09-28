@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Insurance.Domain.Entities;
 using MyApp.Insurance.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class InsuranceDbContext : DbContext, IUnitOfWork
 {
@@ -17,8 +18,7 @@ public sealed class InsuranceDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new InsuranceConfiguration());
         modelBuilder.ApplyConfiguration(new PatientInsuranceConfiguration());
 
-        modelBuilder.Entity<Insurance>().HasQueryFilter(i => !i.IsDeleted);
-        modelBuilder.Entity<PatientInsurance>().HasQueryFilter(pi => !pi.IsDeleted);
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }

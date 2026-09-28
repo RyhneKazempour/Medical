@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Identity.Domain.Entities;
 using MyApp.Identity.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Domain;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class IdentityDbContext : DbContext, IUnitOfWork
 {
@@ -23,18 +25,30 @@ public sealed class IdentityDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
         modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
 
-        // Global query filters for soft delete
-        modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Role>().HasQueryFilter(r => !r.IsDeleted);
-        modelBuilder.Entity<Permission>().HasQueryFilter(p => !p.IsDeleted);
-        modelBuilder.Entity<UserRole>().HasQueryFilter(ur => !ur.IsDeleted);
-        modelBuilder.Entity<RolePermission>().HasQueryFilter(rp => !rp.IsDeleted);
+        // Apply soft delete query filters automatically
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        // Auto-populate audit fields
+        var entries = ChangeTracker.Entries<IAuditableEntity>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            if (entry.State == EntityState.Added)
+            {
+                entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
+            }
+        }
+
         return await base.SaveChangesAsync(cancellationToken);
     }
 }
