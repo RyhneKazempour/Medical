@@ -3,9 +3,9 @@ namespace MyApp.Shared.Domain;
 public interface IAuditableEntity
 {
     DateTimeOffset CreatedAt { get; set; }
-    int? CreatedUserId { get; set; }
+    Guid? CreatedUserId { get; set; }
     DateTimeOffset? UpdatedAt { get; set; }
-    int? UpdatedUserId { get; set; }
+    Guid? UpdatedUserId { get; set; }
     bool IsDeleted { get; set; }
 }
 
@@ -14,16 +14,21 @@ public interface IActivatableEntity
     bool IsActive { get; set; }
 }
 
-public abstract class AuditableEntity : Entity, IAuditableEntity
+public interface ISoftDeletable
+{
+    bool IsDeleted { get; }
+}
+
+public abstract class AuditableEntity : Entity, IAuditableEntity, ISoftDeletable
 {
     protected AuditableEntity() { }
 
     protected AuditableEntity(Guid id) : base(id) { }
 
     public DateTimeOffset CreatedAt { get; set; }
-    public int? CreatedUserId { get; set; }
+    public Guid? CreatedUserId { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
-    public int? UpdatedUserId { get; set; }
+    public Guid? UpdatedUserId { get; set; }
     public bool IsDeleted { get; set; }
 }
 

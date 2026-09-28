@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Medical.Domain.Entities;
 using MyApp.Medical.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class MedicalDbContext : DbContext, IUnitOfWork
 {
@@ -27,14 +28,7 @@ public sealed class MedicalDbContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new DoctorHospitalConfiguration());
         modelBuilder.ApplyConfiguration(new PatientConfiguration());
 
-        // Global query filters for soft delete
-        modelBuilder.Entity<Hospital>().HasQueryFilter(h => !h.IsDeleted);
-        modelBuilder.Entity<Clinic>().HasQueryFilter(c => !c.IsDeleted);
-        modelBuilder.Entity<Specialization>().HasQueryFilter(s => !s.IsDeleted);
-        modelBuilder.Entity<Doctor>().HasQueryFilter(d => !d.IsDeleted);
-        modelBuilder.Entity<DoctorSpecialization>().HasQueryFilter(ds => !ds.IsDeleted);
-        modelBuilder.Entity<DoctorHospital>().HasQueryFilter(dh => !dh.IsDeleted);
-        modelBuilder.Entity<Patient>().HasQueryFilter(p => !p.IsDeleted);
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }

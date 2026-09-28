@@ -6,8 +6,6 @@ public sealed class Role : AuditableActivatableEntity
 {
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
-    public string? ContextType { get; private set; }
-    public Guid? ContextId { get; private set; }
 
     private UserRole[] _userRoles = [];
     public IReadOnlyCollection<UserRole> UserRoles => _userRoles;
@@ -17,29 +15,21 @@ public sealed class Role : AuditableActivatableEntity
 
     private Role() { }
 
-    private Role(Guid id, string name, string? description, string? contextType, Guid? contextId)
+    private Role(Guid id, string name, string? description)
         : base(id)
     {
         Name = name;
         Description = description;
-        ContextType = contextType;
-        ContextId = contextId;
         IsActive = true;
         IsDeleted = false;
     }
 
-    public static Result<Role> Create(string name, string? description, string? contextType, Guid? contextId)
+    public static Result<Role> Create(string name, string? description)
     {
         if (string.IsNullOrWhiteSpace(name))
             return Result<Role>.Failure(new Error("Role.NameRequired", "Role name is required."));
 
-        if (contextType is not null && contextId is null)
-            return Result<Role>.Failure(new Error("Role.ContextIdRequired", "Context ID is required when context type is specified."));
-
-        if (contextType is null && contextId is not null)
-            return Result<Role>.Failure(new Error("Role.ContextTypeRequired", "Context type is required when context ID is specified."));
-
-        var role = new Role(Guid.NewGuid(), name.Trim(), description?.Trim(), contextType, contextId);
+        var role = new Role(Guid.NewGuid(), name.Trim(), description?.Trim());
         return Result<Role>.Success(role);
     }
 

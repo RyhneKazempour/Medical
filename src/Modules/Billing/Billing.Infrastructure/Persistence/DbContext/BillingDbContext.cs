@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyApp.Billing.Domain.Entities;
 using MyApp.Billing.Infrastructure.Persistence.Configurations;
 using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Infrastructure.Persistence;
 
 public sealed class BillingDbContext : DbContext, IUnitOfWork
 {
@@ -15,7 +16,7 @@ public sealed class BillingDbContext : DbContext, IUnitOfWork
     {
         modelBuilder.ApplyConfiguration(new PaymentConfiguration());
 
-        modelBuilder.Entity<Payment>().HasQueryFilter(p => !p.IsDeleted);
+        modelBuilder.ApplySoftDeleteQueryFilters();
 
         base.OnModelCreating(modelBuilder);
     }

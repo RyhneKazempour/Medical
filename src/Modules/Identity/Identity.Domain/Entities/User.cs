@@ -9,10 +9,14 @@ public sealed class User : AuditableActivatableEntity
     public string FirstName { get; private set; } = null!;
     public string LastName { get; private set; } = null!;
     public string? Phone { get; private set; }
+    public string? Mobile { get; private set; }
+
+    private UserRole[] _userRoles = [];
+    public IReadOnlyCollection<UserRole> UserRoles => _userRoles;
 
     private User() { }
 
-    private User(Guid id, string email, string passwordHash, string firstName, string lastName, string? phone)
+    private User(Guid id, string email, string passwordHash, string firstName, string lastName, string? phone, string? mobile)
         : base(id)
     {
         Email = email;
@@ -20,11 +24,12 @@ public sealed class User : AuditableActivatableEntity
         FirstName = firstName;
         LastName = lastName;
         Phone = phone;
+        Mobile = NormalizeMobile(mobile);
         IsActive = true;
         IsDeleted = false;
     }
 
-    public static Result<User> Create(string email, string passwordHash, string firstName, string lastName, string? phone)
+    public static Result<User> Create(string email, string passwordHash, string firstName, string lastName, string? phone, string? mobile)
     {
         if (string.IsNullOrWhiteSpace(email))
             return Result<User>.Failure(new Error("User.EmailRequired", "Email is required."));
@@ -38,11 +43,11 @@ public sealed class User : AuditableActivatableEntity
         if (string.IsNullOrWhiteSpace(lastName))
             return Result<User>.Failure(new Error("User.LastNameRequired", "Last name is required."));
 
-        var user = new User(Guid.NewGuid(), email.Trim().ToLowerInvariant(), passwordHash, firstName.Trim(), lastName.Trim(), phone?.Trim());
+        var user = new User(Guid.NewGuid(), email.Trim().ToLowerInvariant(), passwordHash, firstName.Trim(), lastName.Trim(), phone?.Trim(), mobile?.Trim());
         return Result<User>.Success(user);
     }
 
-    public Result UpdateProfile(string firstName, string lastName, string? phone)
+    public Result UpdateProfile(string firstName, string lastName, string? phone, string? mobile)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             return Result.Failure(new Error("User.FirstNameRequired", "First name is required."));
@@ -53,6 +58,7 @@ public sealed class User : AuditableActivatableEntity
         FirstName = firstName.Trim();
         LastName = lastName.Trim();
         Phone = phone?.Trim();
+        Mobile = NormalizeMobile(mobile);
 
         return Result.Success();
     }
@@ -65,4 +71,19 @@ public sealed class User : AuditableActivatableEntity
     public void Activate() => IsActive = true;
     public void Deactivate() => IsActive = false;
     public void SoftDelete() => IsDeleted = true;
+
+    public static string? NormalizeMobile(string? mobile)
+    {
+        if (string.IsNullOrWhiteSpace(mobile))
+            return null;
+
+        // Remove all non-digit characters except leading +
+        var normalized = new string(mobile.Where(c => char.IsDigit(c) || c == '+').ToArray());
+
+        // Ensure it starts with + if it has country code
+        if (!normalized.StartsWith('+') && normalized.Length > 10)
+            normalized = "+" + normalized;
+
+        return normalized;
+    }
 }

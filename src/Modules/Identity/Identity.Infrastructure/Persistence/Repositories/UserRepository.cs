@@ -34,6 +34,24 @@ internal sealed class UserRepository : IUserRepository
         return await _dbContext.Users.AsNoTracking().AnyAsync(u => u.Email == email.ToLowerInvariant(), cancellationToken);
     }
 
+    public async Task<User?> GetByMobileAsync(string mobile, CancellationToken cancellationToken = default)
+    {
+        var normalized = User.NormalizeMobile(mobile);
+        if (string.IsNullOrEmpty(normalized))
+            return null;
+
+        return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Mobile == normalized, cancellationToken);
+    }
+
+    public async Task<bool> ExistsByMobileAsync(string mobile, CancellationToken cancellationToken = default)
+    {
+        var normalized = User.NormalizeMobile(mobile);
+        if (string.IsNullOrEmpty(normalized))
+            return false;
+
+        return await _dbContext.Users.AsNoTracking().AnyAsync(u => u.Mobile == normalized, cancellationToken);
+    }
+
     public async Task AddAsync(User entity, CancellationToken cancellationToken = default)
     {
         await _dbContext.Users.AddAsync(entity, cancellationToken);

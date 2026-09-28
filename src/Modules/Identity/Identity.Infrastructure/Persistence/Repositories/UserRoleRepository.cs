@@ -3,6 +3,7 @@ namespace MyApp.Identity.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Domain.Entities;
+using MyApp.Identity.Domain.ValueObjects;
 using MyApp.Identity.Infrastructure.Persistence.DbContext;
 
 internal sealed class UserRoleRepository : IUserRoleRepository
@@ -34,9 +35,15 @@ internal sealed class UserRoleRepository : IUserRoleRepository
         return await _dbContext.UserRoles.AsNoTracking().Where(ur => ur.RoleId == roleId).OrderBy(ur => ur.UserId).ToListAsync(cancellationToken);
     }
 
-    public async Task<UserRole?> GetByUserAndRoleAsync(Guid userId, Guid roleId, CancellationToken cancellationToken = default)
+    public async Task<UserRole?> GetByUserRoleScopeAsync(Guid userId, Guid roleId, ScopeType scopeType, Guid scopeId, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.UserRoles.AsNoTracking().FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId, cancellationToken);
+        return await _dbContext.UserRoles.AsNoTracking()
+            .FirstOrDefaultAsync(ur => ur.UserId == userId && ur.RoleId == roleId && ur.ScopeType == scopeType && ur.ScopeId == scopeId, cancellationToken);
+    }
+
+    public async Task<UserRole?> GetByIdIncludingDeletedAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.UserRoles.IgnoreQueryFilters().FirstOrDefaultAsync(ur => ur.Id == id, cancellationToken);
     }
 
     public async Task AddAsync(UserRole entity, CancellationToken cancellationToken = default)
