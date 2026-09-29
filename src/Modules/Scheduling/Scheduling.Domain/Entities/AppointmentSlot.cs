@@ -1,6 +1,7 @@
 namespace MyApp.Scheduling.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public enum AppointmentSlotStatus
 {
@@ -18,6 +19,7 @@ public sealed class AppointmentSlot : AuditableEntity
     public TimeOnly EndTime { get; private set; }
     public AppointmentSlotStatus Status { get; private set; }
 
+    [ForeignKey(nameof(DoctorScheduleId))]
     public DoctorSchedule? DoctorSchedule { get; private set; }
 
     private AppointmentSlot() { }

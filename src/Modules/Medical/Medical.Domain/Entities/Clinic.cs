@@ -1,6 +1,7 @@
 namespace MyApp.Medical.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class Clinic : AuditableActivatableEntity
 {
@@ -8,6 +9,7 @@ public sealed class Clinic : AuditableActivatableEntity
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
 
+    [ForeignKey(nameof(HospitalId))]
     public Hospital? Hospital { get; private set; }
     private DoctorHospital[] _doctorHospitals = [];
     public IReadOnlyCollection<DoctorHospital> DoctorHospitals => _doctorHospitals;

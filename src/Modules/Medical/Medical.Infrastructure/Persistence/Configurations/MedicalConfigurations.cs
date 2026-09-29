@@ -50,7 +50,7 @@ public sealed class ClinicConfiguration : IEntityTypeConfiguration<Clinic>
         builder.Property(c => c.UpdatedAt).HasColumnName("updated_at");
         builder.Property(c => c.UpdatedUserId).HasColumnName("updated_user_id");
 
-        builder.HasOne(c => c.Hospital).WithMany().HasForeignKey(c => c.HospitalId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(c => c.Hospital).WithMany(h => h.Clinics).HasForeignKey(c => c.HospitalId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(c => c.HospitalId).HasDatabaseName("ix_clinics_hospital_id").HasFilter("is_deleted = false");
         builder.HasIndex(c => c.IsActive).HasDatabaseName("ix_clinics_is_active").HasFilter("is_deleted = false");
@@ -126,8 +126,8 @@ public sealed class DoctorSpecializationConfiguration : IEntityTypeConfiguration
         builder.Property(ds => ds.UpdatedAt).HasColumnName("updated_at");
         builder.Property(ds => ds.UpdatedUserId).HasColumnName("updated_user_id");
 
-        builder.HasOne(ds => ds.Doctor).WithMany().HasForeignKey(ds => ds.DoctorId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(ds => ds.Specialization).WithMany().HasForeignKey(ds => ds.SpecializationId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(ds => ds.Doctor).WithMany(d => d.DoctorSpecializations).HasForeignKey(ds => ds.DoctorId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(ds => ds.Specialization).WithMany(s => s.DoctorSpecializations).HasForeignKey(ds => ds.SpecializationId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(ds => ds.DoctorId).HasDatabaseName("ix_doctor_specializations_doctor_id").HasFilter("is_deleted = false");
         builder.HasIndex(ds => ds.SpecializationId).HasDatabaseName("ix_doctor_specializations_specialization_id").HasFilter("is_deleted = false");
@@ -157,8 +157,8 @@ public sealed class DoctorHospitalConfiguration : IEntityTypeConfiguration<Docto
         builder.Property(dh => dh.UpdatedAt).HasColumnName("updated_at");
         builder.Property(dh => dh.UpdatedUserId).HasColumnName("updated_user_id");
 
-        builder.HasOne(dh => dh.DoctorSpecialization).WithMany().HasForeignKey(dh => dh.DoctorSpecializationId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(dh => dh.Clinic).WithMany().HasForeignKey(dh => dh.ClinicId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(dh => dh.DoctorSpecialization).WithMany(ds => ds.DoctorHospitals).HasForeignKey(dh => dh.DoctorSpecializationId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(dh => dh.Clinic).WithMany(c => c.DoctorHospitals).HasForeignKey(dh => dh.ClinicId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(dh => dh.DoctorSpecializationId).HasDatabaseName("ix_doctor_hospitals_doctor_specialization_id").HasFilter("is_deleted = false");
         builder.HasIndex(dh => dh.ClinicId).HasDatabaseName("ix_doctor_hospitals_clinic_id").HasFilter("is_deleted = false");

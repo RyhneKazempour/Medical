@@ -15,7 +15,7 @@ public sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appointm
 
         builder.Property(a => a.PatientId).HasColumnName("patient_id").IsRequired();
         builder.Property(a => a.SlotId).HasColumnName("slot_id").IsRequired();
-        builder.Property(a => a.Status).HasColumnName("status").IsRequired().HasConversion<int>().HasDefaultValue(1);
+        builder.Property(a => a.Status).HasColumnName("status").IsRequired().HasConversion<int>().HasDefaultValue(AppointmentStatus.Reserved);
         builder.Property(a => a.ReservedAt).HasColumnName("reserved_at").IsRequired();
         builder.Property(a => a.ConfirmedAt).HasColumnName("confirmed_at");
         builder.Property(a => a.CancelledAt).HasColumnName("cancelled_at");

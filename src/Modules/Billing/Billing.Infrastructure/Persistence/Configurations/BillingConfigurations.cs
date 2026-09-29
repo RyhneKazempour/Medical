@@ -17,7 +17,7 @@ public sealed class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.Property(p => p.AmountCents).HasColumnName("amount_cents").IsRequired();
         builder.Property(p => p.Currency).HasColumnName("currency").HasMaxLength(3).IsRequired().HasDefaultValue("USD");
         builder.Property(p => p.TransactionNumber).HasColumnName("transaction_number").HasMaxLength(100).IsRequired();
-        builder.Property(p => p.Status).HasColumnName("status").IsRequired().HasConversion<int>().HasDefaultValue(1);
+        builder.Property(p => p.Status).HasColumnName("status").IsRequired().HasConversion<int>().HasDefaultValue(PaymentStatus.Pending);
         builder.Property(p => p.PaymentMethod).HasColumnName("payment_method").IsRequired().HasConversion<int>();
         builder.Property(p => p.PaidAt).HasColumnName("paid_at");
         builder.Property(p => p.InsuranceId).HasColumnName("insurance_id");
