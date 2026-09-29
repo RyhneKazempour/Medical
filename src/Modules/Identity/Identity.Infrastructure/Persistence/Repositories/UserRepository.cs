@@ -52,6 +52,11 @@ internal sealed class UserRepository : IUserRepository
         return await _dbContext.Users.AsNoTracking().AnyAsync(u => u.Mobile == normalized, cancellationToken);
     }
 
+    public async Task<bool> ExistsByIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users.AsNoTracking().AnyAsync(u => u.Id == userId, cancellationToken);
+    }
+
     public async Task AddAsync(User entity, CancellationToken cancellationToken = default)
     {
         await _dbContext.Users.AddAsync(entity, cancellationToken);
