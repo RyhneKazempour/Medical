@@ -1,13 +1,17 @@
 namespace MyApp.Medical.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class DoctorSpecialization : AuditableActivatableEntity
 {
     public Guid DoctorId { get; private set; }
     public Guid SpecializationId { get; private set; }
 
+    [ForeignKey(nameof(DoctorId))]
     public Doctor? Doctor { get; private set; }
+
+    [ForeignKey(nameof(SpecializationId))]
     public Specialization? Specialization { get; private set; }
     private DoctorHospital[] _doctorHospitals = [];
     public IReadOnlyCollection<DoctorHospital> DoctorHospitals => _doctorHospitals;

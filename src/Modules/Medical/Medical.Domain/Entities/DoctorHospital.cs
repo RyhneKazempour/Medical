@@ -1,6 +1,7 @@
 namespace MyApp.Medical.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class DoctorHospital : AuditableActivatableEntity
 {
@@ -10,7 +11,10 @@ public sealed class DoctorHospital : AuditableActivatableEntity
     public DateOnly StartContractDate { get; private set; }
     public DateOnly? EndContractDate { get; private set; }
 
+    [ForeignKey(nameof(DoctorSpecializationId))]
     public DoctorSpecialization? DoctorSpecialization { get; private set; }
+
+    [ForeignKey(nameof(ClinicId))]
     public Clinic? Clinic { get; private set; }
 
     private DoctorHospital() { }

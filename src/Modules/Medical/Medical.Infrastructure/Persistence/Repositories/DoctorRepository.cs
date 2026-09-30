@@ -34,6 +34,11 @@ internal sealed class DoctorRepository : IDoctorRepository
         return await _dbContext.Doctors.AsNoTracking().FirstOrDefaultAsync(d => d.LicenseNumber == licenseNumber, cancellationToken);
     }
 
+    public async Task<bool> ExistsForUserAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Doctors.AsNoTracking().AnyAsync(d => d.UserId == userId, cancellationToken);
+    }
+
     public async Task<IReadOnlyList<Doctor>> GetBySpecializationIdAsync(Guid specializationId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Doctors.AsNoTracking()

@@ -54,12 +54,15 @@ public sealed class PatientInsuranceConfiguration : IEntityTypeConfiguration<Pat
         builder.Property(pi => pi.UpdatedAt).HasColumnName("updated_at");
         builder.Property(pi => pi.UpdatedUserId).HasColumnName("updated_user_id");
 
-        builder.HasOne(pi => pi.Insurance).WithMany().HasForeignKey(pi => pi.InsuranceId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(pi => pi.Insurance).WithMany(i => i.PatientInsurances).HasForeignKey(pi => pi.InsuranceId).OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(pi => pi.PatientId).HasDatabaseName("ix_patient_insurances_patient_id").HasFilter("is_deleted = false");
         builder.HasIndex(pi => pi.InsuranceId).HasDatabaseName("ix_patient_insurances_insurance_id").HasFilter("is_deleted = false");
         builder.HasIndex(pi => new { pi.PatientId, pi.InsuranceId }).IsUnique().HasDatabaseName("uq_patient_insurances_patient_insurance").HasFilter("is_deleted = false");
 
-        // Partial unique index for primary insurance will be created via migration
+        builder.HasIndex(pi => pi.PatientId)
+            .IsUnique()
+            .HasDatabaseName("uq_patient_insurances_primary_per_patient")
+            .HasFilter("is_deleted = false AND is_primary = true");
     }
 }
