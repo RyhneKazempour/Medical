@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyApp.Medical.Application.Abstractions;
 using MyApp.Medical.Infrastructure.Persistence.DbContext;
 using MyApp.Medical.Infrastructure.Persistence.Repositories;
+using MyApp.Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {
@@ -22,6 +23,8 @@ public static class DependencyInjection
                 npgsqlOptions.EnableRetryOnFailure(3);
             });
         });
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MedicalDbContext>());
 
         services.AddScoped<IHospitalRepository, HospitalRepository>();
         services.AddScoped<IClinicRepository, ClinicRepository>();

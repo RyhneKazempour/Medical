@@ -1,22 +1,23 @@
-using MyApp.Shared.Infrastructure;
-using MyApp.Identity.Application;
-using MyApp.Identity.Infrastructure;
-using MyApp.Identity.Api;
-using MyApp.Medical.Application;
-using MyApp.Medical.Infrastructure;
-using MyApp.Medical.Api;
-using MyApp.Scheduling.Application;
-using MyApp.Scheduling.Infrastructure;
-using MyApp.Scheduling.Api;
+using MyApp.Appointments.Api;
 using MyApp.Appointments.Application;
 using MyApp.Appointments.Infrastructure;
-using MyApp.Appointments.Api;
-using MyApp.Insurance.Application;
-using MyApp.Insurance.Infrastructure;
-using MyApp.Insurance.Api;
+using MyApp.Billing.Api;
 using MyApp.Billing.Application;
 using MyApp.Billing.Infrastructure;
-using MyApp.Billing.Api;
+using MyApp.Identity.Api;
+using MyApp.Identity.Application;
+using MyApp.Identity.Infrastructure;
+using MyApp.Identity.Infrastructure.Persistence.DbContext;
+using MyApp.Insurance.Api;
+using MyApp.Insurance.Application;
+using MyApp.Insurance.Infrastructure;
+using MyApp.Medical.Api;
+using MyApp.Medical.Application;
+using MyApp.Medical.Infrastructure;
+using MyApp.Scheduling.Api;
+using MyApp.Scheduling.Application;
+using MyApp.Scheduling.Infrastructure;
+using MyApp.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +48,13 @@ builder.Services.AddBillingApi();
 
 var app = builder.Build();
 
+app.Services.ApplyMigrations();
+
+
 app.UseSharedInfrastructure();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapIdentityApi();
 app.MapMedicalApi();
 app.MapSchedulingApi();

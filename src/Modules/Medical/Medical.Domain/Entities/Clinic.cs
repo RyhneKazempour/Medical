@@ -1,6 +1,7 @@
 namespace MyApp.Medical.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class Clinic : AuditableActivatableEntity
 {
@@ -8,6 +9,7 @@ public sealed class Clinic : AuditableActivatableEntity
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
 
+    [ForeignKey(nameof(HospitalId))]
     public Hospital? Hospital { get; private set; }
     private DoctorHospital[] _doctorHospitals = [];
     public IReadOnlyCollection<DoctorHospital> DoctorHospitals => _doctorHospitals;
@@ -32,8 +34,8 @@ public sealed class Clinic : AuditableActivatableEntity
         if (string.IsNullOrWhiteSpace(name))
             return Result<Clinic>.Failure(new Error("Clinic.NameRequired", "Clinic name is required."));
 
-        var clinic = new Clinic(Guid.NewGuid(), hospitalId, name.Trim(), description?.Trim());
-        return Result<Clinic>.Success(clinic);
+        var Clinic = new Clinic(Guid.NewGuid(), hospitalId, name.Trim(), description?.Trim());
+        return Result<Clinic>.Success(Clinic);
     }
 
     public Result Update(string? name, string? description, bool? isActive)

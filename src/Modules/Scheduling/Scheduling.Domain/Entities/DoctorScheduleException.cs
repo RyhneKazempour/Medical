@@ -1,6 +1,7 @@
 namespace MyApp.Scheduling.Domain.Entities;
 
 using MyApp.Shared.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class DoctorScheduleException : AuditableEntity
 {
@@ -11,6 +12,7 @@ public sealed class DoctorScheduleException : AuditableEntity
     public TimeOnly? NewEndTime { get; private set; }
     public string? Reason { get; private set; }
 
+    [ForeignKey(nameof(DoctorScheduleId))]
     public DoctorSchedule? DoctorSchedule { get; private set; }
 
     private DoctorScheduleException() { }

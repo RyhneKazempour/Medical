@@ -23,6 +23,7 @@ public interface IDoctorRepository : IRepository<Doctor>
     Task<Doctor?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<Doctor?> GetByLicenseNumberAsync(string licenseNumber, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Doctor>> GetBySpecializationIdAsync(Guid specializationId, CancellationToken cancellationToken = default);
+    Task<bool> ExistsForUserAsync(Guid userId, CancellationToken cancellationToken = default);
 }
 
 public interface IDoctorSpecializationRepository : IRepository<DoctorSpecialization>

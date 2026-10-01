@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Modules\Identity\Identity.Domain\Identity.Domain.csproj" />
     <ProjectReference Include="..\..\src\Modules\Identity\Identity.Application\Identity.Application.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Identity\Identity.Infrastructure\Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Modules\Medical\Medical.Domain\Medical.Domain.csproj" />
     <ProjectReference Include="..\..\src\Modules\Medical\Medical.Application\Medical.Application.csproj" />
     <ProjectReference Include="..\..\src\Modules\Scheduling\Scheduling.Domain\Scheduling.Domain.csproj" />

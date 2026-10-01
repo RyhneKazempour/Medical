@@ -78,6 +78,89 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("permissions", (string)null);
                 });
 
+            modelBuilder.Entity("MyApp.Identity.Domain.Entities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedByIpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("created_by_ip_address");
+
+                    b.Property<Guid>("CreatedUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_user_id");
+
+                    b.Property<DateTimeOffset>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("expires_at");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<Guid?>("ReplacedByTokenId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("replaced_by_token_id");
+
+                    b.Property<DateTimeOffset?>("RevokedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("revoked_at");
+
+                    b.Property<string>("RevokedByIpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("revoked_by_ip_address");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
+                        .HasColumnName("token_hash");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid?>("UpdatedUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("updated_user_id");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpiresAt")
+                        .HasDatabaseName("ix_refresh_tokens_expires_at")
+                        .HasFilter("is_deleted = false");
+
+                    b.HasIndex("ReplacedByTokenId")
+                        .IsUnique();
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique()
+                        .HasDatabaseName("ix_refresh_tokens_token_hash")
+                        .HasFilter("is_deleted = false");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_refresh_tokens_user_id")
+                        .HasFilter("is_deleted = false");
+
+                    b.ToTable("refresh_tokens", (string)null);
+                });
+
             modelBuilder.Entity("MyApp.Identity.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -353,6 +436,24 @@ namespace Identity.Infrastructure.Migrations
                         {
                             t.HasCheckConstraint("ck_user_roles_scope_valid", "(scope_type = 0 AND scope_id = '00000000-0000-0000-0000-000000000000') OR (scope_type = 1 AND scope_id != '00000000-0000-0000-0000-000000000000') OR (scope_type = 2 AND scope_id != '00000000-0000-0000-0000-000000000000')");
                         });
+                });
+
+            modelBuilder.Entity("MyApp.Identity.Domain.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("MyApp.Identity.Domain.Entities.RefreshToken", "ReplacedByToken")
+                        .WithOne()
+                        .HasForeignKey("MyApp.Identity.Domain.Entities.RefreshToken", "ReplacedByTokenId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("MyApp.Identity.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ReplacedByToken");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyApp.Identity.Domain.Entities.RolePermission", b =>
