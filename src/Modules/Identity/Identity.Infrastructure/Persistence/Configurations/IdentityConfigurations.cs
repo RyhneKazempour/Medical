@@ -166,3 +166,42 @@ public sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RoleP
         builder.HasIndex(rp => rp.PermissionId).HasDatabaseName("ix_role_permissions_permission_id").HasFilter("is_deleted = false");
     }
 }
+
+public sealed class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
+{
+    public void Configure(EntityTypeBuilder<RefreshToken> builder)
+    {
+        builder.ToTable("refresh_tokens");
+
+        builder.HasKey(rt => rt.Id);
+        builder.Property(rt => rt.Id).HasColumnName("id").HasDefaultValueSql("gen_random_uuid()");
+
+        builder.Property(rt => rt.UserId).HasColumnName("user_id").IsRequired();
+        builder.Property(rt => rt.TokenHash).HasColumnName("token_hash").HasMaxLength(512).IsRequired();
+        builder.Property(rt => rt.ExpiresAt).HasColumnName("expires_at").IsRequired();
+        builder.Property(rt => rt.RevokedAt).HasColumnName("revoked_at");
+        builder.Property(rt => rt.ReplacedByTokenId).HasColumnName("replaced_by_token_id");
+        builder.Property(rt => rt.CreatedByIpAddress).HasColumnName("created_by_ip_address").HasMaxLength(45);
+        builder.Property(rt => rt.RevokedByIpAddress).HasColumnName("revoked_by_ip_address").HasMaxLength(45);
+
+        builder.Property(rt => rt.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
+        builder.Property(rt => rt.CreatedAt).HasColumnName("created_at").IsRequired();
+        builder.Property(rt => rt.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(rt => rt.UpdatedAt).HasColumnName("updated_at");
+        builder.Property(rt => rt.UpdatedUserId).HasColumnName("updated_user_id");
+
+        builder.HasOne(rt => rt.User)
+            .WithMany()
+            .HasForeignKey(rt => rt.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(rt => rt.ReplacedByToken)
+            .WithOne()
+            .HasForeignKey<RefreshToken>(rt => rt.ReplacedByTokenId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(rt => rt.UserId).HasDatabaseName("ix_refresh_tokens_user_id").HasFilter("is_deleted = false");
+        builder.HasIndex(rt => rt.TokenHash).HasDatabaseName("ix_refresh_tokens_token_hash").IsUnique().HasFilter("is_deleted = false");
+        builder.HasIndex(rt => rt.ExpiresAt).HasDatabaseName("ix_refresh_tokens_expires_at").HasFilter("is_deleted = false");
+    }
+}

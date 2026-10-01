@@ -34,8 +34,8 @@ public sealed class Clinic : AuditableActivatableEntity
         if (string.IsNullOrWhiteSpace(name))
             return Result<Clinic>.Failure(new Error("Clinic.NameRequired", "Clinic name is required."));
 
-        var clinic = new Clinic(Guid.NewGuid(), hospitalId, name.Trim(), description?.Trim());
-        return Result<Clinic>.Success(clinic);
+        var Clinic = new Clinic(Guid.NewGuid(), hospitalId, name.Trim(), description?.Trim());
+        return Result<Clinic>.Success(Clinic);
     }
 
     public Result Update(string? name, string? description, bool? isActive)

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyApp.Scheduling.Application.Abstractions;
 using MyApp.Scheduling.Infrastructure.Persistence.DbContext;
 using MyApp.Scheduling.Infrastructure.Persistence.Repositories;
+using MyApp.Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {
@@ -22,6 +23,8 @@ public static class DependencyInjection
                 npgsqlOptions.EnableRetryOnFailure(3);
             });
         });
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<SchedulingDbContext>());
 
         services.AddScoped<IDoctorScheduleRepository, DoctorScheduleRepository>();
         services.AddScoped<IDoctorScheduleExceptionRepository, DoctorScheduleExceptionRepository>();

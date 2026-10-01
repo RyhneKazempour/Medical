@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Infrastructure.HealthChecks;
+using MyApp.Shared.Infrastructure.Swagger;
 
 public static class DependencyInjection
 {
@@ -16,20 +16,16 @@ public static class DependencyInjection
         services.AddScoped<ICurrentUser, CurrentUserImpl>();
         services.AddProblemDetails();
         services.AddCustomHealthChecks(configuration);
-        services.AddOpenApi();
+        services.AddSwaggerDocumentation();
 
         return services;
     }
 
     public static WebApplication UseSharedInfrastructure(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
         app.UseExceptionHandler();
         app.UseCustomHealthChecks();
+        app.UseSwaggerDocumentation();
 
         return app;
     }

@@ -30,6 +30,16 @@ internal sealed class UserRoleRepository : IUserRoleRepository
         return await _dbContext.UserRoles.AsNoTracking().Where(ur => ur.UserId == userId).OrderBy(ur => ur.RoleId).ToListAsync(cancellationToken);
     }
 
+    public async Task<IReadOnlyList<UserRole>> GetByUserIdIncludingRoleAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.UserRoles
+            .AsNoTracking()
+            .Include(ur => ur.Role)
+            .Where(ur => ur.UserId == userId)
+            .OrderBy(ur => ur.RoleId)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<IReadOnlyList<UserRole>> GetByRoleIdAsync(Guid roleId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.UserRoles.AsNoTracking().Where(ur => ur.RoleId == roleId).OrderBy(ur => ur.UserId).ToListAsync(cancellationToken);
