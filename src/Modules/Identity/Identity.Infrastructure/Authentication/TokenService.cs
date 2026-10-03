@@ -1,10 +1,12 @@
 namespace MyApp.Identity.Infrastructure.Authentication;
 
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Application.Authentication;
 using MyApp.Identity.Domain.Entities;
+using MyApp.Identity.Infrastructure.Persistence.DbContext;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
 
@@ -12,22 +14,22 @@ internal sealed class TokenService : ITokenService
 {
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IdentityDbContext _context;
     private readonly JwtOptions _jwtOptions;
 
     public TokenService(
         IAccessTokenGenerator accessTokenGenerator,
         IRefreshTokenRepository refreshTokenRepository,
-        IUnitOfWork unitOfWork,
+        IdentityDbContext context,
         IOptions<JwtOptions> jwtOptions)
     {
         _accessTokenGenerator = accessTokenGenerator;
         _refreshTokenRepository = refreshTokenRepository;
-        _unitOfWork = unitOfWork;
+        _context = context;
         _jwtOptions = jwtOptions.Value;
     }
 
-    public TokenPair GenerateTokenPair(AccessTokenPrincipal principal, string? clientIpAddress = null)
+    public async Task<TokenPair> GenerateTokenPairAsync(AccessTokenPrincipal principal, string? clientIpAddress = null)
     {
         var accessToken = _accessTokenGenerator.GenerateToken(principal);
         var refreshToken = GenerateRefreshToken();
@@ -39,6 +41,9 @@ internal sealed class TokenService : ITokenService
         {
             throw new InvalidOperationException($"Failed to create refresh token: {refreshTokenEntity.Error.Description}");
         }
+
+        await _refreshTokenRepository.AddAsync(refreshTokenEntity.Value);
+        await _context.SaveChangesAsync();
 
         return new TokenPair(accessToken, refreshToken, (int)_jwtOptions.RefreshTokenExpirationDays * 24 * 60 * 60);
     }
@@ -69,7 +74,7 @@ internal sealed class TokenService : ITokenService
             return Result<TokenPair>.Failure(new Error("Token.UserInactive", "User is inactive."));
         }
 
-        // Revoke the old refresh token and create a new one (rotation)
+        // Revoke the old refresh token (rotation)
         storedToken.Revoke(clientIpAddress);
 
         // Generate new access token
@@ -82,7 +87,7 @@ internal sealed class TokenService : ITokenService
         var principal = new AccessTokenPrincipal(user.Id, user.Email, roles);
         var newAccessToken = _accessTokenGenerator.GenerateToken(principal);
 
-        // Generate new refresh token
+        // Generate new refresh token (active, not revoked)
         var newRefreshToken = GenerateRefreshToken();
         var newRefreshTokenHash = HashRefreshToken(newRefreshToken);
         var newExpiresAt = DateTimeOffset.UtcNow.AddDays(_jwtOptions.RefreshTokenExpirationDays);
@@ -93,11 +98,10 @@ internal sealed class TokenService : ITokenService
             return Result<TokenPair>.Failure(newRefreshTokenEntity.Error);
         }
 
-        newRefreshTokenEntity.Value.Revoke(clientIpAddress, storedToken.Id);
-
+        // Persist both changes atomically
         await _refreshTokenRepository.AddAsync(newRefreshTokenEntity.Value, cancellationToken);
         await _refreshTokenRepository.UpdateAsync(storedToken, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return Result<TokenPair>.Success(new TokenPair(
             newAccessToken,

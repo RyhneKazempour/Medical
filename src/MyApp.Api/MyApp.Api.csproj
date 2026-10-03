@@ -29,5 +29,7 @@
     <ProjectReference Include="..\Modules\Billing\Billing.Api\Billing.Api.csproj" />
 
     <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+
+    <ProjectReference Include="..\Shared\Shared.Api\Shared.Api.csproj" />
   </ItemGroup>
 </Project>

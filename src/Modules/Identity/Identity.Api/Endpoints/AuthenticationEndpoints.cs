@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.OpenApi;
 using MediatR;
 using MyApp.Identity.Application.Commands;
 using MyApp.Identity.Application.Authentication;
+using MyApp.Shared.Api.RateLimiting;
 
 public static class AuthenticationEndpoints
 {
@@ -20,6 +21,7 @@ public static class AuthenticationEndpoints
             .WithOpenApi()
             .Produces(StatusCodes.Status200OK, typeof(object))
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .RequireRateLimiting(RateLimitPolicies.IdentityRefresh)
             .AllowAnonymous();
 
         group.MapPost("/refresh", RefreshToken)
@@ -27,17 +29,30 @@ public static class AuthenticationEndpoints
             .WithOpenApi()
             .Produces(StatusCodes.Status200OK, typeof(object))
             .ProducesProblem(StatusCodes.Status400BadRequest)
+            .RequireRateLimiting(RateLimitPolicies.IdentityRefresh)
             .AllowAnonymous();
 
         return app;
     }
 
+    private static string GetClientIp(HttpContext httpContext)
+    {
+        var forwardedFor = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+        if (!string.IsNullOrWhiteSpace(forwardedFor))
+        {
+            return forwardedFor.Split(',').First().Trim();
+        }
+
+        return httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+    }
+
     private static async Task<IResult> Login(
         LoginCommand command,
         ISender sender,
+        HttpContext httpContext,
         CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await sender.Send(command with { ClientIpAddress = GetClientIp(httpContext) }, cancellationToken);
 
         return result.IsSuccess
             ? Results.Ok(new
@@ -54,9 +69,10 @@ public static class AuthenticationEndpoints
     private static async Task<IResult> RefreshToken(
         RefreshTokenCommand command,
         ISender sender,
+        HttpContext httpContext,
         CancellationToken cancellationToken)
     {
-        var result = await sender.Send(command, cancellationToken);
+        var result = await sender.Send(command with { ClientIpAddress = GetClientIp(httpContext) }, cancellationToken);
 
         return result.IsSuccess
             ? Results.Ok(new

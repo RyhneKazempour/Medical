@@ -23,6 +23,8 @@ using MyApp.Scheduling.Api;
 using MyApp.Scheduling.Application;
 using MyApp.Scheduling.Infrastructure;
 using MyApp.Shared.Infrastructure;
+using Microsoft.AspNetCore.RateLimiting;
+using MyApp.Shared.Api.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,8 @@ builder.Services.AddSharedInfrastructure(builder.Configuration);
 builder.Services.AddIdentityApplication();
 builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddIdentityApi();
+
+builder.Services.AddRateLimitingConfiguration();
 
 builder.Services.AddMedicalApplication();
 builder.Services.AddMedicalInfrastructure(builder.Configuration);
@@ -65,6 +69,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseSharedInfrastructure();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -51,7 +51,7 @@ internal sealed class LoginHandler : IRequestHandler<LoginCommand, Result<TokenP
             .ToArray();
 
         var principal = new AccessTokenPrincipal(user.Id, user.Email, roles);
-        var tokenPair = _tokenService.GenerateTokenPair(principal);
+        var tokenPair = await _tokenService.GenerateTokenPairAsync(principal, request.ClientIpAddress);
 
         return Result<TokenPair>.Success(tokenPair);
     }

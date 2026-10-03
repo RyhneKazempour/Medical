@@ -7,7 +7,7 @@ using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
 using MyApp.Shared.Infrastructure.Persistence;
 
-public sealed class IdentityDbContext : DbContext, IUnitOfWork
+public class IdentityDbContext : DbContext, IUnitOfWork
 {
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
@@ -16,7 +16,14 @@ public sealed class IdentityDbContext : DbContext, IUnitOfWork
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options) { }
+    private readonly ICurrentUser _currentUser;
+
+    protected IdentityDbContext() : this(new DbContextOptions<IdentityDbContext>(), null!) { }
+
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ICurrentUser currentUser) : base(options)
+    {
+        _currentUser = currentUser;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -44,10 +51,18 @@ public sealed class IdentityDbContext : DbContext, IUnitOfWork
             if (entry.State == EntityState.Added)
             {
                 entry.Entity.CreatedAt = DateTimeOffset.UtcNow;
+                if (_currentUser?.UserId.HasValue == true)
+                {
+                    entry.Entity.CreatedUserId = _currentUser.UserId;
+                }
             }
             else if (entry.State == EntityState.Modified)
             {
                 entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;
+                if (_currentUser?.UserId.HasValue == true)
+                {
+                    entry.Entity.UpdatedUserId = _currentUser.UserId;
+                }
             }
         }
 

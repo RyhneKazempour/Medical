@@ -1,14 +1,15 @@
 namespace MyApp.UnitTests.Identity;
 
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Moq;
 using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Application.Authentication;
 using MyApp.Identity.Domain.Entities;
 using MyApp.Identity.Infrastructure.Authentication;
+using MyApp.Identity.Infrastructure.Persistence.DbContext;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
 using Xunit;
@@ -18,7 +19,7 @@ public class TokenServiceTests
     private readonly JwtOptions _jwtOptions;
     private readonly Mock<IAccessTokenGenerator> _accessTokenGeneratorMock;
     private readonly Mock<IRefreshTokenRepository> _refreshTokenRepositoryMock;
-    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+    private readonly Mock<IdentityDbContext> _contextMock;
     private readonly TokenService _tokenService;
 
     public TokenServiceTests()
@@ -37,28 +38,33 @@ public class TokenServiceTests
 
         _accessTokenGeneratorMock = new Mock<IAccessTokenGenerator>();
         _refreshTokenRepositoryMock = new Mock<IRefreshTokenRepository>();
-        _unitOfWorkMock = new Mock<IUnitOfWork>();
+        _contextMock = new Mock<IdentityDbContext>();
 
         var accessToken = new AccessToken("test-access-token", 1800);
         _accessTokenGeneratorMock.Setup(x => x.GenerateToken(It.IsAny<AccessTokenPrincipal>()))
             .Returns(accessToken);
 
-        _unitOfWorkMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        _contextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
 
         _tokenService = new TokenService(
             _accessTokenGeneratorMock.Object,
             _refreshTokenRepositoryMock.Object,
-            _unitOfWorkMock.Object,
+            _contextMock.Object,
             Options.Create(_jwtOptions));
     }
 
     [Fact]
-    public void GenerateTokenPair_ValidPrincipal_ReturnsTokenPair()
+    public async Task GenerateTokenPairAsync_ValidPrincipal_ReturnsTokenPair()
     {
         var principal = new AccessTokenPrincipal(Guid.NewGuid(), "test@example.com", ["Doctor"]);
 
-        var tokenPair = _tokenService.GenerateTokenPair(principal, "192.168.1.1");
+        _refreshTokenRepositoryMock.Setup(x => x.AddAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        _contextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(1);
+
+        var tokenPair = await _tokenService.GenerateTokenPairAsync(principal, "192.168.1.1");
 
         Assert.NotNull(tokenPair);
         Assert.Equal("test-access-token", tokenPair.AccessToken.Token);
@@ -66,8 +72,10 @@ public class TokenServiceTests
         Assert.NotEmpty(tokenPair.RefreshToken);
         Assert.Equal(7 * 24 * 60 * 60, tokenPair.RefreshTokenExpiresIn);
 
-        _accessTokenGeneratorMock.Verify(x => x.GenerateToken(It.Is<AccessTokenPrincipal>(p => 
+        _accessTokenGeneratorMock.Verify(x => x.GenerateToken(It.Is<AccessTokenPrincipal>(p =>
             p.UserId == principal.UserId && p.Email == principal.Email && p.Roles.SequenceEqual(principal.Roles))), Times.Once);
+        _refreshTokenRepositoryMock.Verify(x => x.AddAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()), Times.Once);
+        _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -88,6 +96,8 @@ public class TokenServiceTests
             .Returns(Task.CompletedTask);
         _refreshTokenRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
+        _contextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(1);
 
         var result = await _tokenService.RefreshTokenAsync(oldRefreshToken, "192.168.1.1", CancellationToken.None);
 
@@ -100,7 +110,7 @@ public class TokenServiceTests
         _refreshTokenRepositoryMock.Verify(x => x.GetByTokenHashAsync(oldRefreshTokenHash, It.IsAny<CancellationToken>()), Times.Once);
         _refreshTokenRepositoryMock.Verify(x => x.AddAsync(It.IsAny<RefreshToken>(), It.IsAny<CancellationToken>()), Times.Once);
         _refreshTokenRepositoryMock.Verify(x => x.UpdateAsync(It.Is<RefreshToken>(t => t.Id == oldTokenEntity.Id), It.IsAny<CancellationToken>()), Times.Once);
-        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        _contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

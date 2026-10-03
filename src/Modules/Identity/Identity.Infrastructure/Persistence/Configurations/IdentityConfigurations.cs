@@ -24,7 +24,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.IsActive).HasColumnName("is_active").IsRequired().HasDefaultValue(true);
         builder.Property(u => u.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(u => u.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(u => u.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(u => u.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(u => u.UpdatedAt).HasColumnName("updated_at");
         builder.Property(u => u.UpdatedUserId).HasColumnName("updated_user_id");
 
@@ -49,7 +49,7 @@ public sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.Property(r => r.IsActive).HasColumnName("is_active").IsRequired().HasDefaultValue(true);
         builder.Property(r => r.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(r => r.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(r => r.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(r => r.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(r => r.UpdatedAt).HasColumnName("updated_at");
         builder.Property(r => r.UpdatedUserId).HasColumnName("updated_user_id");
 
@@ -72,7 +72,7 @@ public sealed class PermissionConfiguration : IEntityTypeConfiguration<Permissio
 
         builder.Property(p => p.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(p => p.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(p => p.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(p => p.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(p => p.UpdatedAt).HasColumnName("updated_at");
         builder.Property(p => p.UpdatedUserId).HasColumnName("updated_user_id");
 
@@ -103,7 +103,7 @@ public sealed class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
 
         builder.Property(ur => ur.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(ur => ur.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(ur => ur.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(ur => ur.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(ur => ur.UpdatedAt).HasColumnName("updated_at");
         builder.Property(ur => ur.UpdatedUserId).HasColumnName("updated_user_id");
 
@@ -142,7 +142,7 @@ public sealed class RolePermissionConfiguration : IEntityTypeConfiguration<RoleP
 
         builder.Property(rp => rp.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(rp => rp.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(rp => rp.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(rp => rp.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(rp => rp.UpdatedAt).HasColumnName("updated_at");
         builder.Property(rp => rp.UpdatedUserId).HasColumnName("updated_user_id");
 
@@ -186,7 +186,7 @@ public sealed class RefreshTokenConfiguration : IEntityTypeConfiguration<Refresh
 
         builder.Property(rt => rt.IsDeleted).HasColumnName("is_deleted").IsRequired().HasDefaultValue(false);
         builder.Property(rt => rt.CreatedAt).HasColumnName("created_at").IsRequired();
-        builder.Property(rt => rt.CreatedUserId).HasColumnName("created_user_id").IsRequired();
+        builder.Property(rt => rt.CreatedUserId).HasColumnName("created_user_id");
         builder.Property(rt => rt.UpdatedAt).HasColumnName("updated_at");
         builder.Property(rt => rt.UpdatedUserId).HasColumnName("updated_user_id");
 

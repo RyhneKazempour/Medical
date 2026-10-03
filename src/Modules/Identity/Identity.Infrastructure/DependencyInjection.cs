@@ -21,19 +21,18 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-        services.AddDbContext<IdentityDbContext>(options =>
-        {
-            options.UseNpgsql(connectionString, npgsqlOptions =>
+services.AddDbContext<IdentityDbContext>(options =>
             {
-                npgsqlOptions.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
-                npgsqlOptions.EnableRetryOnFailure(3);
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
+                    npgsqlOptions.EnableRetryOnFailure(3);
+                });
             });
-        });
 
-        // Register IUnitOfWork with IdentityDbContext
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<IdentityDbContext>());
+            // IUnitOfWork registration removed - TokenService uses IdentityDbContext directly
 
-        services.AddOptions<JwtOptions>()
+            services.AddOptions<JwtOptions>()
             .Bind(configuration.GetSection("Jwt"))
             .ValidateOnStart()
             .Validate(options => !string.IsNullOrWhiteSpace(options.Issuer), "Jwt:Issuer is required.")

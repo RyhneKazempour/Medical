@@ -6,12 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Application.Authentication;
 using MyApp.Identity.Application.Commands;
 using MyApp.Identity.Domain.Entities;
 using MyApp.Identity.Infrastructure.Authentication;
+using MyApp.Identity.Infrastructure.Persistence.DbContext;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
 using Xunit;
@@ -46,7 +48,7 @@ public class LoginHandlerTests
         _tokenService = new TokenService(
             accessTokenGenerator,
             Mock.Of<IRefreshTokenRepository>(),
-            Mock.Of<IUnitOfWork>(),
+            Mock.Of<IdentityDbContext>(),
             Options.Create(jwtOptions));
 
         _handler = new LoginHandler(

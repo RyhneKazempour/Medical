@@ -29,6 +29,8 @@ internal sealed class RefreshTokenRepository : IRefreshTokenRepository
         return await _dbContext.RefreshTokens
             .AsNoTracking()
             .Include(rt => rt.User)
+                .ThenInclude(u => u!.UserRoles)
+                    .ThenInclude(ur => ur!.Role)
             .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, cancellationToken);
     }
 
