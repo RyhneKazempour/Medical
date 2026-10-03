@@ -8,6 +8,11 @@ using MyApp.Identity.Api;
 using MyApp.Identity.Application;
 using MyApp.Identity.Infrastructure;
 using MyApp.Identity.Infrastructure.Persistence.DbContext;
+using MyApp.Insurance.Infrastructure.Persistence.DbContext;
+using MyApp.Medical.Infrastructure.Persistence.DbContext;
+using MyApp.Scheduling.Infrastructure.Persistence.DbContext;
+using MyApp.Appointments.Infrastructure.Persistence.DbContext;
+using MyApp.Billing.Infrastructure.Persistence.DbContext;
 using MyApp.Insurance.Api;
 using MyApp.Insurance.Application;
 using MyApp.Insurance.Infrastructure;
@@ -48,7 +53,15 @@ builder.Services.AddBillingApi();
 
 var app = builder.Build();
 
-app.Services.ApplyMigrations();
+if (app.Environment.IsDevelopment())
+{
+    app.Services.ApplyIdentityMigrations();
+    app.Services.ApplyMedicalMigrations();
+    app.Services.ApplySchedulingMigrations();
+    app.Services.ApplyAppointmentsMigrations();
+    app.Services.ApplyInsuranceMigrations();
+    app.Services.ApplyBillingMigrations();
+}
 
 
 app.UseSharedInfrastructure();

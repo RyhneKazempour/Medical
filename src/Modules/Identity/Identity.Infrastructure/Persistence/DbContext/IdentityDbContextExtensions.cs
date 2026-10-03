@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class IdentityDbContextExtensions
 {
-    public static void ApplyMigrations(this IServiceProvider services)
+    public static void ApplyIdentityMigrations(this IServiceProvider services)
     {
         using var scope = services.CreateScope();
 
