@@ -10,6 +10,7 @@ public static class IdentityApiExtensions
     {
         app.MapAuthenticationEndpoints();
         app.MapUserEndpoints();
+        app.MapPermissionEndpoints();
 
         return app;
     }

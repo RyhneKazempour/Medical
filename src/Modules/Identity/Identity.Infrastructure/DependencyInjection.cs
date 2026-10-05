@@ -21,32 +21,33 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-services.AddDbContext<IdentityDbContext>(options =>
-            {
-                options.UseNpgsql(connectionString, npgsqlOptions =>
-                {
-                    npgsqlOptions.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
-                    npgsqlOptions.EnableRetryOnFailure(3);
-                });
-            });
+        services.AddDbContext<IdentityDbContext>(options =>
+                    {
+                        options.UseNpgsql(connectionString, npgsqlOptions =>
+                        {
+                            npgsqlOptions.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName);
+                            npgsqlOptions.EnableRetryOnFailure(3);
+                        });
+                    });
 
-            // IUnitOfWork registration removed - TokenService uses IdentityDbContext directly
+        // IUnitOfWork registration removed - TokenService uses IdentityDbContext directly
 
-            services.AddOptions<JwtOptions>()
-            .Bind(configuration.GetSection("Jwt"))
-            .ValidateOnStart()
-            .Validate(options => !string.IsNullOrWhiteSpace(options.Issuer), "Jwt:Issuer is required.")
-            .Validate(options => !string.IsNullOrWhiteSpace(options.Audience), "Jwt:Audience is required.")
-            .Validate(options => !string.IsNullOrWhiteSpace(options.SecretKey), "Jwt:SecretKey is required.")
-            .Validate(options => options.SecretKey?.Length >= 32, "Jwt:SecretKey must be at least 32 characters.")
-            .Validate(options => options.AccessTokenExpirationMinutes > 0, "Jwt:AccessTokenExpirationMinutes must be greater than 0.")
-            .Validate(options => options.RefreshTokenExpirationDays > 0, "Jwt:RefreshTokenExpirationDays must be greater than 0.");
+        services.AddOptions<JwtOptions>()
+        .Bind(configuration.GetSection("Jwt"))
+        .ValidateOnStart()
+        .Validate(options => !string.IsNullOrWhiteSpace(options.Issuer), "Jwt:Issuer is required.")
+        .Validate(options => !string.IsNullOrWhiteSpace(options.Audience), "Jwt:Audience is required.")
+        .Validate(options => !string.IsNullOrWhiteSpace(options.SecretKey), "Jwt:SecretKey is required.")
+        .Validate(options => options.SecretKey?.Length >= 32, "Jwt:SecretKey must be at least 32 characters.")
+        .Validate(options => options.AccessTokenExpirationMinutes > 0, "Jwt:AccessTokenExpirationMinutes must be greater than 0.")
+        .Validate(options => options.RefreshTokenExpirationDays > 0, "Jwt:RefreshTokenExpirationDays must be greater than 0.");
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IPermissionRepository, PermissionRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<IdentityDbContext>());
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IAccessTokenGenerator, AccessTokenGenerator>();

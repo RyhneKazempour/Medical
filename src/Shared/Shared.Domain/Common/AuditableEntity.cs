@@ -17,6 +17,10 @@ public interface IActivatableEntity
 public interface ISoftDeletable
 {
     bool IsDeleted { get; }
+
+    public void Restore();
+
+    public void SoftDelete();
 }
 
 public abstract class AuditableEntity : Entity, IAuditableEntity, ISoftDeletable
@@ -30,6 +34,14 @@ public abstract class AuditableEntity : Entity, IAuditableEntity, ISoftDeletable
     public DateTimeOffset? UpdatedAt { get; set; }
     public Guid? UpdatedUserId { get; set; }
     public bool IsDeleted { get; set; }
+
+
+    public void Restore()
+    {
+        IsDeleted = false;
+    }
+
+    public void SoftDelete() => IsDeleted = true;
 }
 
 public abstract class AuditableActivatableEntity : AuditableEntity, IActivatableEntity
