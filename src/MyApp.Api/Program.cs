@@ -25,6 +25,7 @@ using MyApp.Scheduling.Infrastructure;
 using MyApp.Shared.Infrastructure;
 using Microsoft.AspNetCore.RateLimiting;
 using MyApp.Shared.Api.RateLimiting;
+using MyApp.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,8 @@ builder.Services.AddBillingApplication();
 builder.Services.AddBillingInfrastructure(builder.Configuration);
 builder.Services.AddBillingApi();
 
+builder.Services.AddApplicationObservability(builder.Configuration);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -72,6 +75,7 @@ app.UseSharedInfrastructure();
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 app.MapIdentityApi();
 app.MapMedicalApi();

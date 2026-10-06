@@ -1,11 +1,11 @@
 {
     "schema_version": 2,
-    "commit": "7f9bd60f384f2ddcbb67d0b0ec5247a8d3f5b7ab",
-    "indexed_at": "2026-09-28T06:16:41Z",
-    "project": "Medical",
-    "nodes": 1278,
-    "edges": 4201,
-    "original_size": 4456448,
-    "compressed_size": 509360,
-    "compression_level": 9
+    "commit": "769053ae7be845c7fda6642462db6ceb54d17638",
+    "indexed_at": "2026-10-06T06:54:59Z",
+    "project": "C-Users-user-source-repos-Medical",
+    "nodes": 2230,
+    "edges": 7594,
+    "original_size": 10027008,
+    "compressed_size": 1387922,
+    "compression_level": 3
 }

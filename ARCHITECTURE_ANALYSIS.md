@@ -684,3 +684,69 @@ Before proceeding with implementation, please confirm:
 6. **Int money representation** (`amount_cents` bigint)
 
 Once approved, I'll proceed with Phase 1 implementation.
+
+---
+
+## 12. OBSERVABILITY IMPLEMENTATION (Phase 1 - OpenTelemetry)
+
+As part of the observability initiative, Phase 1 OpenTelemetry tracing has been implemented to monitor incoming HTTP requests and outbound operations.
+
+### 12.1 What Was Added
+- **OpenTelemetry Packages**: Added core tracing packages via centralized version management
+- **Centralized Configuration**: Created `MyApp.Shared.Infrastructure.Observability.OpenTelemetryExtensions` 
+- **ASP.NET Core Instrumentation**: Automatic tracing of all HTTP requests
+- **HttpClient Instrumentation**: Tracing of outgoing HTTP calls
+- **Entity Framework Core Instrumentation**: Tracing of database operations
+- **Console Exporter**: Development-friendly output for local verification
+
+### 12.2 Where It Lives
+Observability code is centralized in the Shared.Infrastructure project:
+```
+src/Shared/Shared.Infrastructure/
+└── Observability/
+    └── OpenTelemetryExtensions.cs
+```
+
+This follows the existing pattern for cross-cutting concerns (like Shared.Infrastructure.DependencyInjection).
+
+### 12.3 What Is Instrumented
+1. **ASP.NET Core HTTP Requests**: 
+   - HTTP method, route, status code, duration
+   - Trace ID and Span ID for correlation
+   - Automatic population of standard HTTP attributes
+
+2. **Outgoing HttpClient Requests**:
+   - Appears as child spans of the current request
+   - HTTP method, URL, status code
+   - Trace context propagation
+
+3. **Entity Framework Core Operations**:
+   - Database queries and commands
+   - Appears as child spans when within an HTTP request context
+   - Operation name, duration, success/failure
+
+### 12.4 How to Run & Verify
+1. Build the solution: `dotnet build`
+2. Run the API: `dotnet run --project src/MyApp.Api/MyApp.Api.csproj`
+3. Make requests to endpoints (e.g., POST `/api/identity/login`)
+4. Observe trace output in console with `Activity.TraceId`, `Activity.SpanId`, etc.
+
+### 12.5 Security & Privacy Protections
+Sensitive data is **explicitly excluded** from telemetry:
+- ✅ Authorization headers, JWT tokens, cookies
+- ✅ Passwords, access tokens, refresh tokens
+- ✅ Payment credentials, full medical records
+- ✅ Request bodies that may contain patient/PII data
+- ✅ No UserId/PatientId added as telemetry attributes
+
+### 12.6 Next Steps (Phase 2 Preview)
+Future observability enhancements will include:
+- Prometheus metrics collection
+- Runtime and ASP.NET Core metrics
+- Custom business metrics
+- Grafana dashboards
+- Tempo distributed tracing backend
+- Loki structured logs
+- OpenTelemetry Collector for production deployment
+
+These will be implemented in subsequent phases as outlined in the observability roadmap.
