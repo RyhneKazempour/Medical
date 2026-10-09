@@ -25,6 +25,7 @@ using MyApp.Scheduling.Infrastructure;
 using MyApp.Shared.Infrastructure;
 using Microsoft.AspNetCore.RateLimiting;
 using MyApp.Shared.Api.RateLimiting;
+using MyApp.Shared.Api.Resilience;
 using MyApp.Shared.Infrastructure.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,7 @@ builder.Services.AddIdentityInfrastructure(builder.Configuration);
 builder.Services.AddIdentityApi();
 
 builder.Services.AddRateLimitingConfiguration();
+builder.Services.AddResilienceConfiguration(builder.Configuration);
 
 builder.Services.AddMedicalApplication();
 builder.Services.AddMedicalInfrastructure(builder.Configuration);
