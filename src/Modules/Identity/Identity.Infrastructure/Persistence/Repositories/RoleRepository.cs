@@ -40,12 +40,6 @@ internal sealed class RoleRepository : IRoleRepository
         await Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Role entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.Roles.Remove(entity);
-        await Task.CompletedTask;
-    }
-
     public async Task AddPermissionToRole(RolePermission entity, CancellationToken cancellationToken = default)
     {
         await _dbContext.RolePermissions.AddAsync(entity, cancellationToken);

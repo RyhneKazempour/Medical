@@ -67,10 +67,4 @@ internal sealed class RefreshTokenRepository : IRefreshTokenRepository
         _dbContext.RefreshTokens.Update(entity);
         await Task.CompletedTask;
     }
-
-    public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.RefreshTokens.Remove(entity);
-        await Task.CompletedTask;
-    }
 }
