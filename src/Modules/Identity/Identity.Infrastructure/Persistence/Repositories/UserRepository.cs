@@ -67,10 +67,4 @@ internal sealed class UserRepository : IUserRepository
         _dbContext.Users.Update(entity);
         await Task.CompletedTask;
     }
-
-    public async Task DeleteAsync(User entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.Users.Remove(entity);
-        await Task.CompletedTask;
-    }
 }

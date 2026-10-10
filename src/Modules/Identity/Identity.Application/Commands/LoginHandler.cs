@@ -5,6 +5,7 @@ using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Application.Authentication;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
+using MyApp.Shared.Infrastructure.Observability.Metrics;
 
 internal sealed class LoginHandler : IRequestHandler<LoginCommand, Result<TokenPair>>
 {
@@ -12,17 +13,20 @@ internal sealed class LoginHandler : IRequestHandler<LoginCommand, Result<TokenP
     private readonly IUserRoleRepository _userRoleRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
+    private readonly AuthenticationMetrics _metrics;
 
     public LoginHandler(
         IUserRepository userRepository,
         IUserRoleRepository userRoleRepository,
         IPasswordHasher passwordHasher,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        AuthenticationMetrics metrics)
     {
         _userRepository = userRepository;
         _userRoleRepository = userRoleRepository;
         _passwordHasher = passwordHasher;
         _tokenService = tokenService;
+        _metrics = metrics;
     }
 
     public async Task<Result<TokenPair>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -30,18 +34,23 @@ internal sealed class LoginHandler : IRequestHandler<LoginCommand, Result<TokenP
         var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
         if (user is null)
         {
+            _metrics.RecordLoginAttempt(success: false);
             return Result<TokenPair>.Failure(new Error("Auth.InvalidCredentials", "Invalid email or password."));
         }
 
         if (!user.IsActive)
         {
+            _metrics.RecordLoginAttempt(success: false);
             return Result<TokenPair>.Failure(new Error("Auth.InvalidCredentials", "Invalid email or password."));
         }
 
         if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
         {
+            _metrics.RecordLoginAttempt(success: false);
             return Result<TokenPair>.Failure(new Error("Auth.InvalidCredentials", "Invalid email or password."));
         }
+
+        _metrics.RecordLoginAttempt(success: true);
 
         var userRoles = await _userRoleRepository.GetByUserIdIncludingRoleAsync(user.Id, cancellationToken);
         var roles = userRoles
@@ -51,7 +60,7 @@ internal sealed class LoginHandler : IRequestHandler<LoginCommand, Result<TokenP
             .ToArray();
 
         var principal = new AccessTokenPrincipal(user.Id, user.Email, roles);
-        var tokenPair = _tokenService.GenerateTokenPair(principal);
+        var tokenPair = await _tokenService.GenerateTokenPairAsync(principal, request.ClientIpAddress);
 
         return Result<TokenPair>.Success(tokenPair);
     }

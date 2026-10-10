@@ -66,10 +66,4 @@ internal sealed class UserRoleRepository : IUserRoleRepository
         _dbContext.UserRoles.Update(entity);
         await Task.CompletedTask;
     }
-
-    public async Task DeleteAsync(UserRole entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.UserRoles.Remove(entity);
-        await Task.CompletedTask;
-    }
 }

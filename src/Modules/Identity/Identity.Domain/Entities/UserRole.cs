@@ -65,15 +65,15 @@ public sealed class UserRole : AuditableEntity
 
     public void IncrementVersion() => Version++;
 
-    public void Restore()
+    public void RestoreUserRole()
     {
         IsDeleted = false;
         IncrementVersion();
     }
 
-    public void SoftDelete()
+    public void SoftDeleteUserRole()
     {
-        IsDeleted=true;
+        IsDeleted = true;
         IncrementVersion();
     }
 

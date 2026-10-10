@@ -40,10 +40,4 @@ internal sealed class PermissionRepository : IPermissionRepository
         _dbContext.Permissions.Update(entity);
         await Task.CompletedTask;
     }
-
-    public async Task DeleteAsync(Permission entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.Permissions.Remove(entity);
-        await Task.CompletedTask;
-    }
 }

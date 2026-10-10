@@ -40,7 +40,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 
@@ -95,7 +95,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("character varying(45)")
                         .HasColumnName("created_by_ip_address");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 
@@ -173,7 +173,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 
@@ -229,7 +229,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 
@@ -285,7 +285,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 
@@ -374,7 +374,7 @@ namespace Identity.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("CreatedUserId")
+                    b.Property<Guid?>("CreatedUserId")
                         .HasColumnType("uuid")
                         .HasColumnName("created_user_id");
 

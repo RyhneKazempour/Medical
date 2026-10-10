@@ -29,6 +29,8 @@ internal sealed class RefreshTokenRepository : IRefreshTokenRepository
         return await _dbContext.RefreshTokens
             .AsNoTracking()
             .Include(rt => rt.User)
+                .ThenInclude(u => u!.UserRoles)
+                    .ThenInclude(ur => ur!.Role)
             .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, cancellationToken);
     }
 
@@ -63,12 +65,6 @@ internal sealed class RefreshTokenRepository : IRefreshTokenRepository
     public async Task UpdateAsync(RefreshToken entity, CancellationToken cancellationToken = default)
     {
         _dbContext.RefreshTokens.Update(entity);
-        await Task.CompletedTask;
-    }
-
-    public async Task DeleteAsync(RefreshToken entity, CancellationToken cancellationToken = default)
-    {
-        _dbContext.RefreshTokens.Remove(entity);
         await Task.CompletedTask;
     }
 }

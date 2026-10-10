@@ -40,9 +40,13 @@ internal sealed class RoleRepository : IRoleRepository
         await Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(Role entity, CancellationToken cancellationToken = default)
+    public async Task AddPermissionToRole(RolePermission entity, CancellationToken cancellationToken = default)
     {
-        _dbContext.Roles.Remove(entity);
-        await Task.CompletedTask;
+        await _dbContext.RolePermissions.AddAsync(entity, cancellationToken);
+    }
+
+    public async Task<RolePermission?> GetPermissionOfRole(Guid roleId, Guid permissionId, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.RolePermissions.FirstOrDefaultAsync(r => r.RoleId == roleId && r.PermissionId == permissionId, cancellationToken);
     }
 }

@@ -6,6 +6,8 @@ using MyApp.Shared.Application.Abstractions;
 public interface IRoleRepository : IRepository<Role>
 {
     Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
+    Task<RolePermission?> GetPermissionOfRole(Guid roleId, Guid permissionId, CancellationToken cancellationToken = default);
+    Task AddPermissionToRole(RolePermission entity, CancellationToken cancellationToken = default);
 }
 
 public interface IPermissionRepository : IRepository<Permission>

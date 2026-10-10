@@ -6,14 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using MyApp.Identity.Application.Abstractions;
 using MyApp.Identity.Application.Authentication;
 using MyApp.Identity.Application.Commands;
 using MyApp.Identity.Domain.Entities;
 using MyApp.Identity.Infrastructure.Authentication;
+using MyApp.Identity.Infrastructure.Persistence.DbContext;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
+using MyApp.Shared.Infrastructure.Observability.Metrics;
 using Xunit;
 
 public class LoginHandlerTests
@@ -22,12 +25,14 @@ public class LoginHandlerTests
     private readonly Mock<IUserRoleRepository> _userRoleRepositoryMock;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
+    private readonly AuthenticationMetrics _metrics;
     private readonly LoginHandler _handler;
 
     public LoginHandlerTests()
     {
         _userRepositoryMock = new Mock<IUserRepository>();
         _userRoleRepositoryMock = new Mock<IUserRoleRepository>();
+        _metrics = new AuthenticationMetrics();
 
         var secretKeyBytes = System.Security.Cryptography.RandomNumberGenerator.GetBytes(32);
         var secretKey = Convert.ToBase64String(secretKeyBytes);
@@ -46,14 +51,15 @@ public class LoginHandlerTests
         _tokenService = new TokenService(
             accessTokenGenerator,
             Mock.Of<IRefreshTokenRepository>(),
-            Mock.Of<IUnitOfWork>(),
+            Mock.Of<IdentityDbContext>(),
             Options.Create(jwtOptions));
 
         _handler = new LoginHandler(
             _userRepositoryMock.Object,
             _userRoleRepositoryMock.Object,
             _passwordHasher,
-            _tokenService);
+            _tokenService,
+            _metrics);
     }
 
     [Fact]

@@ -43,7 +43,6 @@ public sealed class Role : AuditableActivatableEntity
 
         return Result.Success();
     }
-
     public void AddUserRole(UserRole userRole) => _userRoles = [.. _userRoles, userRole];
     public void RemoveUserRole(UserRole userRole) => _userRoles = _userRoles.Where(ur => ur != userRole).ToArray();
 

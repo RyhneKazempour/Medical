@@ -16,8 +16,6 @@ internal sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand,
 
     public async Task<Result<TokenPair>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        // Get client IP from request headers if available (would need HttpContextAccessor in real implementation)
-        // For now, we'll pass null and let the service handle it
-        return await _tokenService.RefreshTokenAsync(request.RefreshToken, null, cancellationToken);
+        return await _tokenService.RefreshTokenAsync(request.RefreshToken, request.ClientIpAddress, cancellationToken);
     }
 }

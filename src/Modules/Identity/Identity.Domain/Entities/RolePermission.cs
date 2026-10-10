@@ -31,11 +31,4 @@ public sealed class RolePermission : AuditableEntity
         var rolePermission = new RolePermission(Guid.NewGuid(), roleId, permissionId);
         return Result<RolePermission>.Success(rolePermission);
     }
-
-    public void Restore()
-    {
-        IsDeleted = false;
-    }
-
-    public void SoftDelete() => IsDeleted = true;
 }
