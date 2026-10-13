@@ -1,5 +1,6 @@
 namespace MyApp.Identity.Infrastructure;
 
+using MyApp.Identity.Contracts.Abstractions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using MyApp.Identity.Infrastructure.Authentication;
 using MyApp.Identity.Infrastructure.Authorization;
 using MyApp.Identity.Infrastructure.Persistence.DbContext;
 using MyApp.Identity.Infrastructure.Persistence.Repositories;
+using MyApp.Identity.Infrastructure.Services;
 using MyApp.Shared.Application.Abstractions;
 using System.Text;
 
@@ -43,6 +45,7 @@ public static class DependencyInjection
         .Validate(options => options.RefreshTokenExpirationDays > 0, "Jwt:RefreshTokenExpirationDays must be greater than 0.");
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserExistsChecker, UserExistsChecker>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IPermissionRepository, PermissionRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();

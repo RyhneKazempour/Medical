@@ -1,32 +1,32 @@
 namespace MyApp.Medical.Application.Commands;
 
 using MediatR;
-using MyApp.Identity.Application.Abstractions;
 using MyApp.Medical.Application.Abstractions;
 using MyApp.Medical.Domain.Entities;
 using MyApp.Shared.Application.Abstractions;
 using MyApp.Shared.Domain;
+using MyApp.Identity.Contracts.Abstractions;
 
 public sealed class CreateDoctorHandler
     : IRequestHandler<CreateDoctorCommand, Result<Guid>>
 {
     private readonly IDoctorRepository _doctorRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IUserExistsChecker _userExistsChecker;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateDoctorHandler(
         IDoctorRepository doctorRepository,
-        IUserRepository userRepository,
+        IUserExistsChecker userExistsChecker,
         IUnitOfWork unitOfWork)
     {
         _doctorRepository = doctorRepository;
-        _userRepository = userRepository;
+        _userExistsChecker = userExistsChecker;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<Guid>> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
     {
-        var userExists = await _userRepository.ExistsByIdAsync(request.UserId, cancellationToken);
+        var userExists = await _userExistsChecker.ExistsByIdAsync(request.UserId, cancellationToken);
         if (!userExists)
         {
             return Result<Guid>.Failure(new Error("Doctor.UserNotFound", "User does not exist."));

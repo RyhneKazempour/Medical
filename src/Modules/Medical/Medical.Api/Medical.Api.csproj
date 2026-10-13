@@ -8,5 +8,6 @@
     <ProjectReference Include="..\Medical.Application\Medical.Application.csproj" />
     <ProjectReference Include="..\Medical.Infrastructure\Medical.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.Api\Shared.Api.csproj" />
   </ItemGroup>
 </Project>

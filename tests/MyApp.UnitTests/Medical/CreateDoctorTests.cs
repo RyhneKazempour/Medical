@@ -7,7 +7,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using MyApp.Identity.Application.Abstractions;
+using MyApp.Identity.Contracts.Abstractions;
 using MyApp.Medical.Application.Abstractions;
 using MyApp.Medical.Application.Commands;
 using MyApp.Medical.Application.Validators;
@@ -70,17 +70,17 @@ public class CreateDoctorCommandValidatorTests
 
 public class CreateDoctorHandlerTests
 {
-    private readonly Mock<IUserRepository> _userRepositoryMock;
+    private readonly Mock<IUserExistsChecker> _userExistsCheckerMock;
     private readonly Mock<IDoctorRepository> _doctorRepositoryMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly CreateDoctorHandler _handler;
 
     public CreateDoctorHandlerTests()
     {
-        _userRepositoryMock = new Mock<IUserRepository>();
+        _userExistsCheckerMock = new Mock<IUserExistsChecker>();
         _doctorRepositoryMock = new Mock<IDoctorRepository>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
-        _handler = new CreateDoctorHandler(_doctorRepositoryMock.Object, _userRepositoryMock.Object, _unitOfWorkMock.Object);
+        _handler = new CreateDoctorHandler(_doctorRepositoryMock.Object, _userExistsCheckerMock.Object, _unitOfWorkMock.Object);
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public class CreateDoctorHandlerTests
     {
         var userId = Guid.NewGuid();
         var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
-        _userRepositoryMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
+        _userExistsCheckerMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
         var result = await _handler.Handle(command, CancellationToken.None);
@@ -99,13 +99,13 @@ public class CreateDoctorHandlerTests
         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    [Fact]
-    public async Task Handle_UserAlreadyHasDoctor_ReturnsFailure()
-    {
-        var userId = Guid.NewGuid();
-        var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
-        _userRepositoryMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
+        [Fact]
+        public async Task Handle_UserAlreadyHasDoctor_ReturnsFailure()
+        {
+            var userId = Guid.NewGuid();
+            var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
+            _userExistsCheckerMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
         _doctorRepositoryMock.Setup(x => x.ExistsForUserAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
@@ -117,13 +117,13 @@ public class CreateDoctorHandlerTests
         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    [Fact]
-    public async Task Handle_ValidUserAndNoExistingDoctor_CreatesDoctor()
-    {
-        var userId = Guid.NewGuid();
-        var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
-        _userRepositoryMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
+        [Fact]
+        public async Task Handle_ValidUserAndNoExistingDoctor_CreatesDoctor()
+        {
+            var userId = Guid.NewGuid();
+            var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
+            _userExistsCheckerMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
         _doctorRepositoryMock.Setup(x => x.ExistsForUserAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
         _unitOfWorkMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
@@ -137,13 +137,13 @@ public class CreateDoctorHandlerTests
         _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact]
-    public async Task Handle_DatabaseUniqueConstraintViolation_ReturnsConflictError()
-    {
-        var userId = Guid.NewGuid();
-        var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
-        _userRepositoryMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
+        [Fact]
+        public async Task Handle_DatabaseUniqueConstraintViolation_ReturnsConflictError()
+        {
+            var userId = Guid.NewGuid();
+            var command = new CreateDoctorCommand(userId, "LIC12345", "Test bio");
+            _userExistsCheckerMock.Setup(x => x.ExistsByIdAsync(userId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
         _doctorRepositoryMock.Setup(x => x.ExistsForUserAsync(userId, It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
         _unitOfWorkMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
