@@ -65,7 +65,7 @@ public static class PermissionEndpoints
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound);
 
-        group.MapPost("/{permissionId:guid}/restore", RestorePermission)
+        group.MapPost("/{permissionId:guid}/restore", SoftDeletePermission)
             .WithName("RestorePermission")
             .WithOpenApi()
             .Produces(StatusCodes.Status200OK)
