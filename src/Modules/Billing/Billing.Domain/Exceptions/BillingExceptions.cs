@@ -1,7 +1,7 @@
-namespace MyApp.Billing.Domain.Exceptions;
+namespace Billing.Domain.Exceptions;
 
-using MyApp.Billing.Domain.Entities;
-using MyApp.Shared.Domain.Exceptions;
+using Billing.Domain.Entities;
+using Shared.Domain.Exceptions;
 
 public sealed class PaymentNotFoundException : DomainException
 {

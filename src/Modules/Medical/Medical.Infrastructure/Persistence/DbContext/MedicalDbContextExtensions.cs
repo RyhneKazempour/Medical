@@ -1,4 +1,4 @@
-namespace MyApp.Medical.Infrastructure.Persistence.DbContext;
+namespace Medical.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

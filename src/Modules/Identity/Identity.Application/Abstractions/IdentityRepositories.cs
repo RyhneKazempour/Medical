@@ -1,7 +1,8 @@
-namespace MyApp.Identity.Application.Abstractions;
+namespace Identity.Application.Abstractions;
 
-using MyApp.Identity.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
+using Identity.Domain.Entities;
+using Identity.Domain.ValueObjects;
+using Shared.Application.Abstractions;
 
 public interface IRoleRepository : IRepository<Role>
 {
@@ -20,7 +21,7 @@ public interface IUserRoleRepository : IRepository<UserRole>
     Task<IReadOnlyList<UserRole>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<UserRole>> GetByUserIdIncludingRoleAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<UserRole>> GetByRoleIdAsync(Guid roleId, CancellationToken cancellationToken = default);
-    Task<UserRole?> GetByUserRoleScopeAsync(Guid userId, Guid roleId, MyApp.Identity.Domain.ValueObjects.ScopeType scopeType, Guid scopeId, CancellationToken cancellationToken = default);
+    Task<UserRole?> GetByUserRoleScopeAsync(Guid userId, Guid roleId, ScopeType scopeType, Guid scopeId, CancellationToken cancellationToken = default);
     Task<UserRole?> GetByIdIncludingDeletedAsync(Guid id, CancellationToken cancellationToken = default);
 }
 

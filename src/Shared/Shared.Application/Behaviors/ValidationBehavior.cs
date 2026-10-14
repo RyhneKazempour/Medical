@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Application.Behaviors;
+namespace Shared.Application.Behaviors;
 
 using FluentValidation;
 using MediatR;

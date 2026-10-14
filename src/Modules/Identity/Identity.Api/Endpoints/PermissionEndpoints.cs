@@ -1,13 +1,12 @@
-namespace MyApp.Identity.Api.Endpoints;
+namespace Identity.Api.Endpoints;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.OpenApi;
 using MediatR;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Shared.Api.RateLimiting;
+using Identity.Application.Authentication;
+using Identity.Application.Commands;
 
 public static class PermissionEndpoints
 {

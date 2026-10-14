@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Application.Abstractions;
+namespace Identity.Application.Abstractions;
 
-using MyApp.Identity.Application.Authentication;
-using MyApp.Shared.Domain;
+using Identity.Application.Authentication;
+using Shared.Domain.Common;
 
 public interface ITokenService
     {

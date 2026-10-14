@@ -1,10 +1,10 @@
-namespace MyApp.Billing.Infrastructure.Persistence.DbContext;
+namespace Billing.Infrastructure.Persistence.DbContext;
 
+using Billing.Domain.Entities;
+using Billing.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Billing.Domain.Entities;
-using MyApp.Billing.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.Persistence;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.Persistence;
 
 public sealed class BillingDbContext : DbContext, IUnitOfWork
 {

@@ -1,6 +1,6 @@
 using System.Diagnostics.Metrics;
 
-namespace MyApp.Shared.Api.Resilience;
+namespace Shared.Api.Resilience;
 
 /// <summary>
 /// Meter source for resilience observability metrics.

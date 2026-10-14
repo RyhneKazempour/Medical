@@ -1,4 +1,4 @@
-namespace MyApp.Billing.Infrastructure.Persistence.DbContext;
+namespace Billing.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

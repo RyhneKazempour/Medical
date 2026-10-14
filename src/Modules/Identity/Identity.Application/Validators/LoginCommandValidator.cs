@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Application.Validators;
+namespace Identity.Application.Validators;
 
 using FluentValidation;
-using MyApp.Identity.Application.Commands;
+using Identity.Application.Commands;
 
 public sealed class LoginCommandValidator : AbstractValidator<LoginCommand>
 {

@@ -1,12 +1,12 @@
-namespace MyApp.Billing.Infrastructure;
+namespace Billing.Infrastructure;
 
+using Billing.Application.Abstractions;
+using Billing.Infrastructure.Persistence.DbContext;
+using Billing.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Billing.Application.Abstractions;
-using MyApp.Billing.Infrastructure.Persistence.DbContext;
-using MyApp.Billing.Infrastructure.Persistence.Repositories;
-using MyApp.Shared.Application.Abstractions;
+using Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {

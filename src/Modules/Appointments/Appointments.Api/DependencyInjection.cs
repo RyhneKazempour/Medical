@@ -1,4 +1,4 @@
-namespace MyApp.Appointments.Api;
+namespace Appointments.Api;
 
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;

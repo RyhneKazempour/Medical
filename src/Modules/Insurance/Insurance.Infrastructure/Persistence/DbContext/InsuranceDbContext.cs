@@ -1,14 +1,14 @@
-namespace MyApp.Insurance.Infrastructure.Persistence.DbContext;
+namespace Insurance.Infrastructure.Persistence.DbContext;
 
+using Insurance.Domain.Entities;
+using Insurance.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Insurance.Domain.Entities;
-using MyApp.Insurance.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.Persistence;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.Persistence;
 
 public sealed class InsuranceDbContext : DbContext, IUnitOfWork
 {
-    public DbSet<Insurance> Insurances => Set<Insurance>();
+    public DbSet<InsuranceInfo> Insurances => Set<InsuranceInfo>();
     public DbSet<PatientInsurance> PatientInsurances => Set<PatientInsurance>();
 
     public InsuranceDbContext(DbContextOptions<InsuranceDbContext> options) : base(options) { }

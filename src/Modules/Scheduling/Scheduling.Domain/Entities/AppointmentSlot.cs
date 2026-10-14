@@ -1,6 +1,6 @@
-namespace MyApp.Scheduling.Domain.Entities;
+namespace Scheduling.Domain.Entities;
 
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public enum AppointmentSlotStatus

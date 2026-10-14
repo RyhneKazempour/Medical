@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Domain.ValueObjects;
+namespace Identity.Domain.ValueObjects;
 
 public enum ScopeType
 {

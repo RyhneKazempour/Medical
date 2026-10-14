@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Application.Authentication;
+namespace Identity.Application.Authentication;
 
 public sealed record RoleResponse(
     Guid Id,

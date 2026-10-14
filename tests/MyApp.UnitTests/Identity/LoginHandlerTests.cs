@@ -8,16 +8,13 @@ using MediatR;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Infrastructure.Authentication;
-using MyApp.Identity.Infrastructure.Persistence.DbContext;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
-using MyApp.Shared.Infrastructure.Observability.Metrics;
 using Xunit;
+using global::Identity.Application.Abstractions;
+using Shared.Infrastructure.Observability.Metrics;
+using global::Identity.Application.Commands;
+using global::Identity.Domain.Entities;
+using global::Identity.Infrastructure.Authentication;
+using global::Identity.Infrastructure.Persistence.DbContext;
 
 public class LoginHandlerTests
 {

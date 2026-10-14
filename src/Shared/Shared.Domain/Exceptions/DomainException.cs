@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Domain.Exceptions;
+namespace Shared.Domain.Exceptions;
 
 public abstract class DomainException : Exception
 {

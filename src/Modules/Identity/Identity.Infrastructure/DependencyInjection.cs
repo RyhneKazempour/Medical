@@ -1,20 +1,20 @@
-namespace MyApp.Identity.Infrastructure;
+namespace Identity.Infrastructure;
 
-using MyApp.Identity.Contracts.Abstractions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Infrastructure.Authentication;
-using MyApp.Identity.Infrastructure.Authorization;
-using MyApp.Identity.Infrastructure.Persistence.DbContext;
-using MyApp.Identity.Infrastructure.Persistence.Repositories;
-using MyApp.Identity.Infrastructure.Services;
-using MyApp.Shared.Application.Abstractions;
 using System.Text;
+using Shared.Application.Abstractions;
+using Identity.Application.Abstractions;
+using Identity.Contracts.Abstractions;
+using Identity.Infrastructure.Persistence.DbContext;
+using Identity.Infrastructure.Authentication;
+using Identity.Infrastructure.Persistence.Repositories;
+using Identity.Infrastructure.Services;
+using Identity.Infrastructure.Authorization;
 
 public static class DependencyInjection
 {

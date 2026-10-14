@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Application.Abstractions;
+namespace Shared.Application.Abstractions;
 
 public interface IRepository<T> where T : class
 {

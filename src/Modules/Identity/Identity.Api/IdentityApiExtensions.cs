@@ -1,8 +1,7 @@
-namespace MyApp.Identity.Api;
+namespace Identity.Api;
 
-using Microsoft.AspNetCore.Builder;
+using Identity.Api.Endpoints;
 using Microsoft.AspNetCore.Routing;
-using MyApp.Identity.Api.Endpoints;
 
 public static class IdentityApiExtensions
 {

@@ -1,9 +1,8 @@
-namespace MyApp.Identity.Infrastructure.Persistence.Configurations;
+namespace Identity.Infrastructure.Persistence.Configurations;
 
+using Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Domain.ValueObjects;
 
 public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {

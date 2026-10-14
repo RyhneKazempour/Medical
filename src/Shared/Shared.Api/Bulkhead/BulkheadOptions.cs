@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Api.Bulkhead;
+namespace Shared.Api.Bulkhead;
 
 /// <summary>
 /// Configuration options for a bulkhead.

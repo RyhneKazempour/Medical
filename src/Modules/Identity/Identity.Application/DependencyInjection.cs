@@ -1,10 +1,9 @@
-namespace MyApp.Identity.Application;
+namespace Identity.Application;
 
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Shared.Application.Behaviors;
+using Shared.Application.Behaviors;
 
 public static class DependencyInjection
 {

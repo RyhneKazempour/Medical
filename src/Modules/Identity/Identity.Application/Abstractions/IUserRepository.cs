@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Application.Abstractions;
+namespace Identity.Application.Abstractions;
 
-using MyApp.Identity.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
+using Identity.Domain.Entities;
+using Shared.Application.Abstractions;
 
 public interface IUserRepository : IRepository<User>
 {

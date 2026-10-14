@@ -1,4 +1,4 @@
-namespace MyApp.Appointments.Application;
+namespace Appointments.Application;
 
 using Microsoft.Extensions.DependencyInjection;
 

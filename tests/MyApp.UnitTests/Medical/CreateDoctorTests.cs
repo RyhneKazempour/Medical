@@ -4,16 +4,15 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using global::Identity.Contracts.Abstractions;
+using global::Medical.Application.Abstractions;
+using global::Medical.Application.Doctors.Commands.CreateDoctor;
+using global::Medical.Application.Validators;
+using global::Medical.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using MyApp.Identity.Contracts.Abstractions;
-using MyApp.Medical.Application.Abstractions;
-using MyApp.Medical.Application.Commands;
-using MyApp.Medical.Application.Validators;
-using MyApp.Medical.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
+using Shared.Application.Abstractions;
 using Xunit;
 
 public class CreateDoctorCommandValidatorTests

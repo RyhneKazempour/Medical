@@ -1,8 +1,8 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
+using Identity.Application.Authentication;
 using MediatR;
-using MyApp.Shared.Domain;
-using MyApp.Identity.Application.Authentication;
+using Shared.Domain.Common;
 
 public sealed record UpdatePermissionCommand(
     Guid PermissionId,

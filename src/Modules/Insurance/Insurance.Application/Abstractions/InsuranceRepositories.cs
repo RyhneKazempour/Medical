@@ -1,11 +1,10 @@
-namespace MyApp.Insurance.Application.Abstractions;
+using Insurance.Domain.Entities;
+using Shared.Application.Abstractions;
 
-using MyApp.Insurance.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-
-public interface IInsuranceRepository : IRepository<Insurance>
+namespace Insurance.Application.Abstractions;
+public interface IInsuranceRepository : IRepository<Insurance.Domain.Entities.InsuranceInfo>
 {
-    Task<Insurance?> GetByCodeAsync(string code, CancellationToken cancellationToken = default);
+    Task<Insurance.Domain.Entities.InsuranceInfo?> GetByCodeAsync(string code, CancellationToken cancellationToken = default);
 }
 
 public interface IPatientInsuranceRepository : IRepository<PatientInsurance>

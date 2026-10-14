@@ -1,9 +1,9 @@
-namespace MyApp.Appointments.Infrastructure.Persistence.Repositories;
+namespace Appointments.Infrastructure.Persistence.Repositories;
 
+using Appointments.Application.Abstractions;
+using Appointments.Domain.Entities;
+using Appointments.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Appointments.Application.Abstractions;
-using MyApp.Appointments.Domain.Entities;
-using MyApp.Appointments.Infrastructure.Persistence.DbContext;
 
 internal sealed class AppointmentRepository : IAppointmentRepository
 {

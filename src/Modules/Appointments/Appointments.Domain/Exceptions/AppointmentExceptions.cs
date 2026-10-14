@@ -1,7 +1,7 @@
-namespace MyApp.Appointments.Domain.Exceptions;
+namespace Appointments.Domain.Exceptions;
 
-using MyApp.Appointments.Domain.Entities;
-using MyApp.Shared.Domain.Exceptions;
+using Appointments.Domain.Entities;
+using Shared.Domain.Exceptions;
 
 public sealed class AppointmentNotFoundException : DomainException
 {

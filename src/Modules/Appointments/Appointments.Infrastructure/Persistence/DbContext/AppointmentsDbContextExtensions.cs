@@ -1,4 +1,4 @@
-namespace MyApp.Appointments.Infrastructure.Persistence.DbContext;
+namespace Appointments.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

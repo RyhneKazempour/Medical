@@ -1,8 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Shared.Api.Resilience;
 
-namespace MyApp.Shared.Api.Resilience;
+namespace Shared.Api.Resilience;
 
 /// <summary>
 /// Extension methods for registering resilience services with DI.

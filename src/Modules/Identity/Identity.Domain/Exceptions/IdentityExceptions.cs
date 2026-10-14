@@ -1,7 +1,6 @@
-namespace MyApp.Identity.Domain.Exceptions;
+using Shared.Domain.Exceptions;
 
-using MyApp.Shared.Domain.Exceptions;
-
+namespace Identity.Domain.Exceptions;
 public sealed class UserNotFoundException : DomainException
 {
     public UserNotFoundException(Guid userId)
@@ -90,7 +89,7 @@ public sealed class RolePermissionAlreadyExistsException : DomainException
 
 public sealed class UserRoleAlreadyExistsException : DomainException
 {
-    public UserRoleAlreadyExistsException(Guid userId, Guid roleId, MyApp.Identity.Domain.ValueObjects.ScopeType scopeType, Guid scopeId)
+    public UserRoleAlreadyExistsException(Guid userId, Guid roleId, ValueObjects.ScopeType scopeType, Guid scopeId)
         : base($"User '{userId}' already has role '{roleId}' in scope '{scopeType}' with ID '{scopeId}'.")
     {
         UserId = userId;
@@ -101,7 +100,7 @@ public sealed class UserRoleAlreadyExistsException : DomainException
 
     public Guid UserId { get; }
     public Guid RoleId { get; }
-    public MyApp.Identity.Domain.ValueObjects.ScopeType ScopeType { get; }
+    public ValueObjects.ScopeType ScopeType { get; }
     public Guid ScopeId { get; }
 }
 

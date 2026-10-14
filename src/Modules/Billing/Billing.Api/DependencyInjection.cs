@@ -1,4 +1,4 @@
-namespace MyApp.Billing.Api;
+namespace Billing.Api;
 
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;

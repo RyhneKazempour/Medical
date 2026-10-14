@@ -1,11 +1,11 @@
-namespace MyApp.Identity.Infrastructure.Persistence.DbContext;
+namespace Identity.Infrastructure.Persistence.DbContext;
 
+using Identity.Domain.Entities;
+using Identity.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
-using MyApp.Shared.Infrastructure.Persistence;
+using Shared.Application.Abstractions;
+using Shared.Domain.Common;
+using Shared.Infrastructure.Persistence;
 
 public class IdentityDbContext : DbContext, IUnitOfWork
 {

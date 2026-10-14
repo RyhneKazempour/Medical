@@ -1,9 +1,9 @@
-namespace MyApp.Insurance.Infrastructure.Persistence.Repositories;
+namespace InsuranceInfo.Infrastructure.Persistence.Repositories;
 
+using Insurance.Application.Abstractions;
+using Insurance.Domain.Entities;
+using Insurance.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Insurance.Application.Abstractions;
-using MyApp.Insurance.Domain.Entities;
-using MyApp.Insurance.Infrastructure.Persistence.DbContext;
 
 internal sealed class PatientInsuranceRepository : IPatientInsuranceRepository
 {

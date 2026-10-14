@@ -1,9 +1,9 @@
 using FluentValidation;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Commands;
+using Identity.Application.Abstractions;
+using Identity.Application.Commands;
 using System.Text.RegularExpressions;
 
-namespace MyApp.Identity.Application.Validators;
+namespace Identity.Application.Validators;
 
 public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {

@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Infrastructure.Swagger;
+namespace Shared.Infrastructure.Swagger;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.OpenApi;

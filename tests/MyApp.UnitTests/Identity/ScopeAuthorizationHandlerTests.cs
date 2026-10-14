@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Infrastructure.Authorization;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Domain.ValueObjects;
 using Xunit;
+using global::Identity.Application.Abstractions;
+using global::Identity.Infrastructure.Authorization;
+using global::Identity.Domain.ValueObjects;
+using global::Identity.Domain.Entities;
 
 public class ScopeAuthorizationHandlerTests
 {

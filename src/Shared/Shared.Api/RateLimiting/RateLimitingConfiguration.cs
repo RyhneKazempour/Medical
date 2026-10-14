@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Shared.Api.Bulkhead;
+using Shared.Api.Bulkhead;
 using System.Threading.RateLimiting;
 
-namespace MyApp.Shared.Api.RateLimiting;
+namespace Shared.Api.RateLimiting;
 
 
 public static class RateLimitingConfiguration

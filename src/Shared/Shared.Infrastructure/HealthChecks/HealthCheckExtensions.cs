@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Infrastructure.HealthChecks;
+namespace Shared.Infrastructure.HealthChecks;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

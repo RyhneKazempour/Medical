@@ -1,10 +1,10 @@
-namespace MyApp.Scheduling.Infrastructure.Persistence.DbContext;
+namespace Scheduling.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
-using MyApp.Scheduling.Domain.Entities;
-using MyApp.Scheduling.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.Persistence;
+using Scheduling.Domain.Entities;
+using Scheduling.Infrastructure.Persistence.Configurations;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.Persistence;
 
 public sealed class SchedulingDbContext : DbContext, IUnitOfWork
 {

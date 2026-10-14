@@ -1,12 +1,12 @@
-namespace MyApp.Scheduling.Infrastructure;
+namespace Scheduling.Infrastructure;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Scheduling.Application.Abstractions;
-using MyApp.Scheduling.Infrastructure.Persistence.DbContext;
-using MyApp.Scheduling.Infrastructure.Persistence.Repositories;
-using MyApp.Shared.Application.Abstractions;
+using Scheduling.Application.Abstractions;
+using Scheduling.Infrastructure.Persistence.DbContext;
+using Scheduling.Infrastructure.Persistence.Repositories;
+using Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {

@@ -1,12 +1,13 @@
-namespace MyApp.Insurance.Infrastructure;
+namespace Insurance.Infrastructure;
 
+using Insurance.Application.Abstractions;
+using Insurance.Infrastructure.Persistence.DbContext;
+using Insurance.Infrastructure.Persistence.Repositories;
+using InsuranceInfo.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Insurance.Application.Abstractions;
-using MyApp.Insurance.Infrastructure.Persistence.DbContext;
-using MyApp.Insurance.Infrastructure.Persistence.Repositories;
-using MyApp.Shared.Application.Abstractions;
+using Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {

@@ -1,8 +1,8 @@
-namespace MyApp.Medical.Infrastructure.Persistence.Configurations;
+namespace Medical.Infrastructure.Persistence.Configurations;
 
+using Medical.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Medical.Domain.Entities;
 
 public sealed class HospitalConfiguration : IEntityTypeConfiguration<Hospital>
 {

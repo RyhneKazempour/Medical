@@ -1,6 +1,6 @@
-namespace MyApp.Medical.Domain.Exceptions;
+namespace Medical.Domain.Exceptions;
 
-using MyApp.Shared.Domain.Exceptions;
+using Shared.Domain.Exceptions;
 
 public sealed class HospitalNotFoundException : DomainException
 {

@@ -1,11 +1,10 @@
-using MyApp.Shared.Api.Bulkhead;
-using MyApp.Shared.Api.Resilience;
 using Polly;
 using Polly.Retry;
 using Polly.CircuitBreaker;
 using Polly.Timeout;
+using Shared.Api.Bulkhead;
 
-namespace MyApp.Shared.Api.Resilience;
+namespace Shared.Api.Resilience;
 
 /// <summary>
 /// Static factory for creating resilience pipelines.

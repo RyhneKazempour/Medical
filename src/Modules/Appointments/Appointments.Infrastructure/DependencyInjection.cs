@@ -1,12 +1,12 @@
-namespace MyApp.Appointments.Infrastructure;
+namespace Appointments.Infrastructure;
 
+using Appointments.Application.Abstractions;
+using Appointments.Infrastructure.Persistence.DbContext;
+using Appointments.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Appointments.Application.Abstractions;
-using MyApp.Appointments.Infrastructure.Persistence.DbContext;
-using MyApp.Appointments.Infrastructure.Persistence.Repositories;
-using MyApp.Shared.Application.Abstractions;
+using Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {

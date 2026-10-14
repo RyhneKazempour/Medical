@@ -1,4 +1,4 @@
-namespace MyApp.Insurance.Infrastructure.Persistence.DbContext;
+namespace Insurance.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

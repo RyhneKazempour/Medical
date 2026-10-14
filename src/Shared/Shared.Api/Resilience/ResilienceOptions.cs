@@ -1,6 +1,6 @@
-using MyApp.Shared.Api.Bulkhead;
+using Shared.Api.Bulkhead;
 
-namespace MyApp.Shared.Api.Resilience;
+namespace Shared.Api.Resilience;
 
 /// <summary>
 /// Root configuration section for resilience policies.

@@ -1,7 +1,6 @@
-namespace MyApp.Billing.Domain.Entities;
+using Shared.Domain.Common;
 
-using MyApp.Shared.Domain;
-
+namespace Billing.Domain.Entities;
 public enum PaymentStatus
 {
     Pending = 1,

@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Api.Endpoints;
+namespace Identity.Api.Endpoints;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -26,9 +26,9 @@ public static class UserEndpoints
     {
         return Results.Ok(new
         {
-            user_id = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value,
-            email = user.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value,
-            roles = user.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value).ToArray()
+            user_id = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+            email = user.FindFirst(ClaimTypes.Email)?.Value,
+            roles = user.FindAll(ClaimTypes.Role).Select(c => c.Value).ToArray()
         });
     }
 }

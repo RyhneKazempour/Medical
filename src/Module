@@ -1,0 +1,46 @@
+namespace MyApp.Medical.Application.Commands;
+
+using MediatR;
+using MyApp.Medical.Application.Abstractions;
+using MyApp.Medical.Application.Authentication;
+using MyApp.Medical.Domain.Entities;
+using MyApp.Shared.Application.Abstractions;
+using MyApp.Shared.Domain;
+
+public sealed class UpdateHospitalHandler
+    : IRequestHandler<UpdateHospitalCommand, Result<HospitalResponse>>
+{
+    private readonly IHospitalRepository _hospitalRepository;
+    private readonly IUnitOfWork _UnitOfWork;
+
+    public UpdateHospitalHandler(IHospitalRepository hospitalRepository, IUnitOfWorkUnitOfWork)
+    {
+        _hospitalRepository = hospitalRepository;
+        _UnitOfWork =UnitOfWork;
+    }
+
+    public async Task<Result<HospitalResponse>> Handle(UpdateHospitalCommand request, CancellationToken cancellationToken)
+    {
+        var hospital = await _hospitalRepository GetByIdAsync(request.Id, cancellationToken);
+        if (hospital is null || hospital.IsDeleted)
+        {
+            return Result<HospitalResponse>.Failure(new Error("Hospital.NotFound", "Hospital not found."));
+        }
+
+        var updateResult = hospital.Update(request.Name, request.Address, request.Phone, request.Email, request.IsActive);
+        if (updateResult.IsFailure)
+        {
+            return Result<HospitalResponse>.Failure(updateResult.Error);
+        }
+
+        await _hospitalRepository.UpdateAsync(hospital, cancellationToken);
+        await _UnitOfWork.WriteAllTextAsync(cancellationToken);
+
+        return Result<HospitalResponse>.Success(new HospitalResponse(
+            hospital.Id,
+            hospital.Name,
+            hospital.Address,
+            hospital.Phone,
+            hospital.Email));
+    }
+}

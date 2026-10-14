@@ -1,8 +1,8 @@
 using FluentValidation;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Commands;
+using Identity.Application.Abstractions;
+using Identity.Application.Commands;
 
-namespace MyApp.Identity.Application.Validators;
+namespace Identity.Application.Validators;
 
 public sealed class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {

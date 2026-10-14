@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Domain;
+namespace Shared.Domain.Common;
 
 public abstract class ValueObject
 {

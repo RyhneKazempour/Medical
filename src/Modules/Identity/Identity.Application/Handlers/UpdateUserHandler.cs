@@ -1,12 +1,11 @@
 using MediatR;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
+using Shared.Application.Abstractions;
+using Identity.Application.Commands;
+using Identity.Application.Abstractions;
+using Identity.Application.Authentication;
 
-namespace MyApp.Identity.Application.Handlers;
+namespace Identity.Application.Handlers;
 
 internal sealed class UpdateUserHandler : IRequestHandler<UpdateUserCommand, Result<UserResponse>>
 {

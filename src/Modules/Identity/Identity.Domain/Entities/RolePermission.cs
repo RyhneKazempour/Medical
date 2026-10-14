@@ -1,7 +1,6 @@
-namespace MyApp.Identity.Domain.Entities;
+using Shared.Domain.Common;
 
-using MyApp.Shared.Domain;
-
+namespace Identity.Domain.Entities;
 public sealed class RolePermission : AuditableEntity
 {
     public Guid RoleId { get; private set; }

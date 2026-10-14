@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Infrastructure.Authentication;
+namespace Identity.Infrastructure.Authentication;
 
 public sealed class JwtOptions
 {

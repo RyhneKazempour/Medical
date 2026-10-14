@@ -1,6 +1,6 @@
-namespace MyApp.Insurance.Domain.Entities;
+namespace Insurance.Domain.Entities;
 
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public sealed class PatientInsurance : AuditableEntity
@@ -14,7 +14,7 @@ public sealed class PatientInsurance : AuditableEntity
     public DateOnly? ValidUntil { get; private set; }
 
     [ForeignKey(nameof(InsuranceId))]
-    public Insurance? Insurance { get; private set; }
+    public InsuranceInfo? Insurance { get; private set; }
 
     private PatientInsurance() { }
 

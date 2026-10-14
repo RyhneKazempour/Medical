@@ -1,8 +1,8 @@
-namespace MyApp.Appointments.Infrastructure.Persistence.Configurations;
+namespace Appointments.Infrastructure.Persistence.Configurations;
 
+using Appointments.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Appointments.Domain.Entities;
 
 public sealed class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
 {

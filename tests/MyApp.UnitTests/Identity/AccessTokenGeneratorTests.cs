@@ -3,10 +3,10 @@ namespace MyApp.UnitTests.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using global::Identity.Application.Authentication;
+using global::Identity.Infrastructure.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Infrastructure.Authentication;
 using Xunit;
 
 public class AccessTokenGeneratorTests

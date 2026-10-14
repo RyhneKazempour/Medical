@@ -1,10 +1,10 @@
-namespace MyApp.Identity.Infrastructure.Authorization;
+namespace Identity.Infrastructure.Authorization;
 
 using System.Security.Claims;
+using Identity.Application.Abstractions;
+using Identity.Domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Domain.ValueObjects;
 
 internal sealed class ScopeAuthorizationHandler : AuthorizationHandler<ScopeRequirement>
 {

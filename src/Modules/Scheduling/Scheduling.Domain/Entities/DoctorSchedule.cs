@@ -1,6 +1,5 @@
-namespace MyApp.Scheduling.Domain.Entities;
-
-using MyApp.Shared.Domain;
+namespace Scheduling.Domain.Entities;
+using Shared.Domain.Common;
 
 public enum ScheduleExceptionType
 {

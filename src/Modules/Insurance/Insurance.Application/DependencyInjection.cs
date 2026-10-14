@@ -1,4 +1,4 @@
-namespace MyApp.Insurance.Application;
+namespace Insurance.Application;
 
 using Microsoft.Extensions.DependencyInjection;
 

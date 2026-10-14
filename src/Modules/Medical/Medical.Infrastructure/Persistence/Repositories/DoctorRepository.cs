@@ -1,9 +1,9 @@
-namespace MyApp.Medical.Infrastructure.Persistence.Repositories;
+namespace Medical.Infrastructure.Persistence.Repositories;
 
+using Medical.Application.Abstractions;
+using Medical.Domain.Entities;
+using Medical.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Medical.Application.Abstractions;
-using MyApp.Medical.Domain.Entities;
-using MyApp.Medical.Infrastructure.Persistence.DbContext;
 
 internal sealed class DoctorRepository : IDoctorRepository
 {

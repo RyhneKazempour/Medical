@@ -1,8 +1,8 @@
 namespace MyApp.UnitTests.Identity;
 
 using FluentValidation.TestHelper;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Application.Validators;
+using global::Identity.Application.Commands;
+using global::Identity.Application.Validators;
 using Xunit;
 
 public class RefreshTokenCommandValidatorTests

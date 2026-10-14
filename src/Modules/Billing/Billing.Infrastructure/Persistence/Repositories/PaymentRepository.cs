@@ -1,9 +1,9 @@
-namespace MyApp.Billing.Infrastructure.Persistence.Repositories;
+namespace Billing.Infrastructure.Persistence.Repositories;
 
+using Billing.Application.Abstractions;
+using Billing.Domain.Entities;
+using Billing.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Billing.Application.Abstractions;
-using MyApp.Billing.Domain.Entities;
-using MyApp.Billing.Infrastructure.Persistence.DbContext;
 
 internal sealed class PaymentRepository : IPaymentRepository
 {

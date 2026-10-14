@@ -1,6 +1,6 @@
-namespace MyApp.Medical.Domain.Entities;
+namespace Medical.Domain.Entities;
 
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 public sealed class Patient : AuditableEntity
 {

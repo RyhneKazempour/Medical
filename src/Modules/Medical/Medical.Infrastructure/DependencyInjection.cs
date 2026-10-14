@@ -1,12 +1,12 @@
-namespace MyApp.Medical.Infrastructure;
+namespace Medical.Infrastructure;
 
+using Medical.Application.Abstractions;
+using Medical.Infrastructure.Persistence.DbContext;
+using Medical.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Medical.Application.Abstractions;
-using MyApp.Medical.Infrastructure.Persistence.DbContext;
-using MyApp.Medical.Infrastructure.Persistence.Repositories;
-using MyApp.Shared.Application.Abstractions;
+using Shared.Application.Abstractions;
 
 public static class DependencyInjection
 {

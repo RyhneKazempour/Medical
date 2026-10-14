@@ -1,7 +1,9 @@
-namespace MyApp.Identity.Application.Authentication;
+using Identity.Domain.ValueObjects;
+
+namespace Identity.Application.Authentication;
 
 public sealed record UserRoleDto(
     Guid Id,
-    MyApp.Identity.Domain.ValueObjects.ScopeType ScopeType,
+    ScopeType ScopeType,
     Guid ScopeId,
     string RoleName);

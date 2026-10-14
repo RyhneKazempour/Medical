@@ -1,11 +1,12 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
+using Identity.Application.Authentication;
+using Identity.Domain.ValueObjects;
 using MediatR;
-using MyApp.Shared.Domain;
-using MyApp.Identity.Application.Authentication;
+using Shared.Domain.Common;
 
 public sealed record AssignRoleCommand(
     Guid UserId,
     Guid RoleId,
-    MyApp.Identity.Domain.ValueObjects.ScopeType ScopeType,
+    ScopeType ScopeType,
     Guid ScopeId) : IRequest<Result<UserRoleDto>>;

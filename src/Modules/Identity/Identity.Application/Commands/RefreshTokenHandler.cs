@@ -1,9 +1,9 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
+using Identity.Application.Abstractions;
+using Identity.Application.Authentication;
 using MediatR;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 internal sealed class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, Result<TokenPair>>
 {

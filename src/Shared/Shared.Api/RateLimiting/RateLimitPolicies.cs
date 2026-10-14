@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Api.RateLimiting;
+namespace Shared.Api.RateLimiting;
 
 public static class RateLimitPolicies
 {

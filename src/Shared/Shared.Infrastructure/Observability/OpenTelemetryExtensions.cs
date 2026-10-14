@@ -1,11 +1,11 @@
-namespace MyApp.Shared.Infrastructure.Observability;
+namespace Shared.Infrastructure.Observability;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
-using MyApp.Shared.Infrastructure.Observability.Metrics;
+using Shared.Infrastructure.Observability.Metrics;
 
 public static class OpenTelemetryExtensions
 {

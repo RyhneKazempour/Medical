@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Api;
+namespace Identity.Api;
 
 using Microsoft.Extensions.DependencyInjection;
 

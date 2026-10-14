@@ -1,10 +1,10 @@
-namespace MyApp.Appointments.Infrastructure.Persistence.DbContext;
+namespace Appointments.Infrastructure.Persistence.DbContext;
 
+using Appointments.Domain.Entities;
+using Appointments.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Appointments.Domain.Entities;
-using MyApp.Appointments.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.Persistence;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.Persistence;
 
 public sealed class AppointmentsDbContext : DbContext, IUnitOfWork
 {

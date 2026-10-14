@@ -1,8 +1,7 @@
-namespace MyApp.Scheduling.Application.Abstractions;
+using Scheduling.Domain.Entities;
+using Shared.Application.Abstractions;
 
-using MyApp.Scheduling.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-
+namespace Scheduling.Application.Abstractions;
 public interface IDoctorScheduleRepository : IRepository<DoctorSchedule>
 {
     Task<IReadOnlyList<DoctorSchedule>> GetByDoctorHospitalIdAsync(Guid doctorHospitalId, CancellationToken cancellationToken = default);

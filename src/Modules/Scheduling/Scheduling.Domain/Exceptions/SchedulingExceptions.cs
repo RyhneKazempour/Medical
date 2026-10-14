@@ -1,7 +1,7 @@
-namespace MyApp.Scheduling.Domain.Exceptions;
+namespace Scheduling.Domain.Exceptions;
 
-using MyApp.Scheduling.Domain.Entities;
-using MyApp.Shared.Domain.Exceptions;
+using Scheduling.Domain.Entities;
+using Shared.Domain.Exceptions;
 
 public sealed class DoctorScheduleNotFoundException : DomainException
 {

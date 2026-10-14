@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
+using Identity.Application.Authentication;
 using MediatR;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 public sealed record LoginCommand(string Email, string Password, string? ClientIpAddress = null) : IRequest<Result<TokenPair>>;

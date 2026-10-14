@@ -2,16 +2,14 @@ namespace MyApp.UnitTests.Identity;
 
 using System.Threading;
 using System.Threading.Tasks;
+using global::Identity.Application.Abstractions;
+using global::Identity.Application.Authentication;
+using global::Identity.Domain.Entities;
+using global::Identity.Infrastructure.Authentication;
+using global::Identity.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Moq;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Infrastructure.Authentication;
-using MyApp.Identity.Infrastructure.Persistence.DbContext;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
 using Xunit;
 
 public class TokenServiceTests

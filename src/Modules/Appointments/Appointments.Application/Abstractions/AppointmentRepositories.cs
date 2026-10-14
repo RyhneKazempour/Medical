@@ -1,8 +1,7 @@
-namespace MyApp.Appointments.Application.Abstractions;
+using Appointments.Domain.Entities;
+using Shared.Application.Abstractions;
 
-using MyApp.Appointments.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-
+namespace Appointments.Application.Abstractions;
 public interface IAppointmentRepository : IRepository<Appointment>
 {
     Task<IReadOnlyList<Appointment>> GetByPatientIdAsync(Guid patientId, CancellationToken cancellationToken = default);

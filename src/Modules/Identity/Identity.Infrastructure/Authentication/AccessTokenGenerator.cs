@@ -1,12 +1,12 @@
-namespace MyApp.Identity.Infrastructure.Authentication;
+namespace Identity.Infrastructure.Authentication;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Identity.Application.Abstractions;
+using Identity.Application.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
 
 internal sealed class AccessTokenGenerator : IAccessTokenGenerator
 {
@@ -21,7 +21,7 @@ internal sealed class AccessTokenGenerator : IAccessTokenGenerator
     {
         var now = DateTimeOffset.UtcNow;
         var expires = now.AddMinutes(_options.AccessTokenExpirationMinutes);
-        var expiresIn = (int)_options.AccessTokenExpirationMinutes * 60;
+        var expiresIn = _options.AccessTokenExpirationMinutes * 60;
 
         var claims = new List<Claim>
         {

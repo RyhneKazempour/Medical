@@ -2,15 +2,13 @@ namespace MyApp.UnitTests.Identity;
 
 using System.Threading;
 using System.Threading.Tasks;
+using global::Identity.Application.Abstractions;
+using global::Identity.Application.Authentication;
+using global::Identity.Application.Commands;
 using MediatR;
 using Microsoft.Extensions.Options;
 using Moq;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Infrastructure.Authentication;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 using Xunit;
 
 public class RefreshTokenHandlerTests

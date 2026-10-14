@@ -1,9 +1,9 @@
-namespace MyApp.Identity.Infrastructure.Persistence.Repositories;
+namespace Identity.Infrastructure.Persistence.Repositories;
 
+using Identity.Application.Abstractions;
+using Identity.Domain.Entities;
+using Identity.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Infrastructure.Persistence.DbContext;
 
 internal sealed class PermissionRepository : IPermissionRepository
 {

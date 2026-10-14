@@ -1,8 +1,7 @@
-namespace MyApp.Billing.Application.Abstractions;
+using Billing.Domain.Entities;
+using Shared.Application.Abstractions;
 
-using MyApp.Billing.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-
+namespace Billing.Application.Abstractions;
 public interface IPaymentRepository : IRepository<Payment>
 {
     Task<Payment?> GetByAppointmentIdAsync(Guid appointmentId, CancellationToken cancellationToken = default);

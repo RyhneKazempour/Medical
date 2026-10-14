@@ -1,4 +1,4 @@
-namespace MyApp.Medical.Application;
+namespace Medical.Application;
 
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;

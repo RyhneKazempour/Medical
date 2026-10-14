@@ -1,9 +1,9 @@
-namespace MyApp.Scheduling.Infrastructure.Persistence.Repositories;
+namespace Scheduling.Infrastructure.Persistence.Repositories;
 
 using Microsoft.EntityFrameworkCore;
-using MyApp.Scheduling.Application.Abstractions;
-using MyApp.Scheduling.Domain.Entities;
-using MyApp.Scheduling.Infrastructure.Persistence.DbContext;
+using Scheduling.Application.Abstractions;
+using Scheduling.Infrastructure.Persistence.DbContext;
+using Scheduling.Domain.Entities;
 
 internal sealed class DoctorScheduleRepository : IDoctorScheduleRepository
 {

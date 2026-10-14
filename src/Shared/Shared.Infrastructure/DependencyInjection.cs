@@ -1,12 +1,12 @@
-namespace MyApp.Shared.Infrastructure;
+namespace Shared.Infrastructure;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.HealthChecks;
-using MyApp.Shared.Infrastructure.Swagger;
+using Shared.Infrastructure.Swagger;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.HealthChecks;
 
 public static class DependencyInjection
 {
@@ -46,7 +46,7 @@ internal sealed class CurrentUserImpl : ICurrentUser
 
     public bool IsAuthenticated => _httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated ?? false;
 
-    public System.Collections.Generic.IEnumerable<string> Roles => _httpContextAccessor.HttpContext?.User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value) ?? [];
+    public IEnumerable<string> Roles => _httpContextAccessor.HttpContext?.User.FindAll(System.Security.Claims.ClaimTypes.Role).Select(c => c.Value) ?? [];
 
     public bool IsInRole(string role) => _httpContextAccessor.HttpContext?.User.IsInRole(role) ?? false;
 

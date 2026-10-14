@@ -1,8 +1,8 @@
-namespace MyApp.Scheduling.Infrastructure.Persistence.Configurations;
+namespace Scheduling.Infrastructure.Persistence.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Scheduling.Domain.Entities;
+using Scheduling.Domain.Entities;
 
 public sealed class DoctorScheduleConfiguration : IEntityTypeConfiguration<DoctorSchedule>
 {

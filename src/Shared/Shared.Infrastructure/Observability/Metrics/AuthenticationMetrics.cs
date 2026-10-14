@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Infrastructure.Observability.Metrics;
+namespace Shared.Infrastructure.Observability.Metrics;
 
 using System.Diagnostics.Metrics;
 using Microsoft.Extensions.Configuration;

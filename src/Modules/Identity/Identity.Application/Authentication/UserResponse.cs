@@ -1,4 +1,6 @@
-namespace MyApp.Identity.Application.Authentication;
+using Identity.Domain.ValueObjects;
+
+namespace Identity.Application.Authentication;
 
 public sealed record UserResponse(
     Guid Id,
@@ -13,5 +15,5 @@ public sealed record UserResponse(
 
 public sealed record UserRoleResponse(
     string RoleName,
-    MyApp.Identity.Domain.ValueObjects.ScopeType ScopeType,
+    ScopeType ScopeType,
     Guid ScopeId);

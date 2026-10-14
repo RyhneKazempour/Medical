@@ -1,10 +1,11 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
+using Identity.Domain.ValueObjects;
 using MediatR;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 public sealed record RemoveRoleCommand(
     Guid UserId,
     Guid RoleId,
-    MyApp.Identity.Domain.ValueObjects.ScopeType ScopeType,
+    ScopeType ScopeType,
     Guid ScopeId) : IRequest<Result>;

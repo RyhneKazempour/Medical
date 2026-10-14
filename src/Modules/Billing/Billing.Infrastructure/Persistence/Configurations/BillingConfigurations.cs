@@ -1,8 +1,8 @@
-namespace MyApp.Billing.Infrastructure.Persistence.Configurations;
+namespace Billing.Infrastructure.Persistence.Configurations;
 
+using Billing.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Billing.Domain.Entities;
 
 public sealed class PaymentConfiguration : IEntityTypeConfiguration<Payment>
 {

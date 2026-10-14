@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Infrastructure.Authentication;
+namespace Identity.Infrastructure.Authentication;
 
 using System.Security.Cryptography;
-using MyApp.Identity.Application.Abstractions;
+using Identity.Application.Abstractions;
 
 internal sealed class PasswordHasher : IPasswordHasher
 {

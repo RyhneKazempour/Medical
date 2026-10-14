@@ -1,6 +1,6 @@
-namespace MyApp.Identity.Application.Abstractions;
+namespace Identity.Application.Abstractions;
 
-using MyApp.Identity.Application.Authentication;
+using Identity.Application.Authentication;
 
 public interface IAccessTokenGenerator
 {

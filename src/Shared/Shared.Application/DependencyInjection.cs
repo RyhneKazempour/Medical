@@ -1,9 +1,9 @@
-namespace MyApp.Shared.Application;
+namespace Shared.Application;
 
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Application.Behaviors;
+using Shared.Application.Abstractions;
+using Shared.Application.Behaviors;
 
 public static class DependencyInjection
 {

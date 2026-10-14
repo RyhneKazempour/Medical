@@ -1,7 +1,7 @@
-namespace MyApp.Medical.Application.Abstractions;
+namespace Medical.Application.Abstractions;
 
-using MyApp.Medical.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
+using Medical.Domain.Entities;
+using Shared.Application.Abstractions;
 
 public interface IHospitalRepository : IRepository<Hospital>
 {

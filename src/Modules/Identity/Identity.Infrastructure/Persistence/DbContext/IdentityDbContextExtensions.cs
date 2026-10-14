@@ -1,4 +1,4 @@
-namespace MyApp.Identity.Infrastructure.Persistence.DbContext;
+namespace Identity.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

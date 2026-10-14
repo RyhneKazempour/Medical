@@ -1,8 +1,7 @@
-namespace MyApp.Identity.Domain.Entities;
+using Identity.Domain.ValueObjects;
+using Shared.Domain.Common;
 
-using MyApp.Shared.Domain;
-using MyApp.Identity.Domain.ValueObjects;
-
+namespace Identity.Domain.Entities;
 public sealed class UserRole : AuditableEntity
 {
     public Guid UserId { get; private set; }

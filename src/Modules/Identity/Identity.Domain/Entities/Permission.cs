@@ -1,7 +1,6 @@
-namespace MyApp.Identity.Domain.Entities;
+using Shared.Domain.Common;
 
-using MyApp.Shared.Domain;
-
+namespace Identity.Domain.Entities;
 public sealed class Permission : AuditableEntity
 {
     public string Resource { get; private set; } = null!;

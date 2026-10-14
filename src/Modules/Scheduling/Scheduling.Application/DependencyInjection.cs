@@ -1,4 +1,4 @@
-namespace MyApp.Scheduling.Application;
+namespace Scheduling.Application;
 
 using Microsoft.Extensions.DependencyInjection;
 

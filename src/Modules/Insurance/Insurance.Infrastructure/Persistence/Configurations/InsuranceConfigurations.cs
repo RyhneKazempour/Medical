@@ -1,12 +1,12 @@
-namespace MyApp.Insurance.Infrastructure.Persistence.Configurations;
+namespace Insurance.Infrastructure.Persistence.Configurations;
 
+using Insurance.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MyApp.Insurance.Domain.Entities;
 
-public sealed class InsuranceConfiguration : IEntityTypeConfiguration<Insurance>
+public sealed class InsuranceConfiguration : IEntityTypeConfiguration<InsuranceInfo>
 {
-    public void Configure(EntityTypeBuilder<Insurance> builder)
+    public void Configure(EntityTypeBuilder<InsuranceInfo> builder)
     {
         builder.ToTable("insurances");
 

@@ -1,6 +1,6 @@
-namespace MyApp.Identity.Application.Commands;
+namespace Identity.Application.Commands;
 
 using MediatR;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 public sealed record RestoreRoleCommand(Guid RoleId) : IRequest<Result>;

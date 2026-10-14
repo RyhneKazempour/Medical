@@ -1,7 +1,6 @@
-namespace MyApp.Insurance.Domain.Exceptions;
+using Shared.Domain.Exceptions;
 
-using MyApp.Shared.Domain.Exceptions;
-
+namespace Insurance.Domain.Exceptions;
 public sealed class InsuranceNotFoundException : DomainException
 {
     public InsuranceNotFoundException(int insuranceId)

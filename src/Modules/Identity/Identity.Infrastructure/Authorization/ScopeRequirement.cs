@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Infrastructure.Authorization;
+namespace Identity.Infrastructure.Authorization;
 
-using MyApp.Identity.Domain.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
+using Identity.Domain.ValueObjects;
 
 public sealed class ScopeRequirement : IAuthorizationRequirement
 {

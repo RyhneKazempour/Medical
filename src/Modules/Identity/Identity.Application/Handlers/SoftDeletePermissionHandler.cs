@@ -1,12 +1,10 @@
-namespace MyApp.Identity.Application.Handlers;
+namespace Identity.Application.Handlers;
 
+using Identity.Application.Abstractions;
+using Identity.Application.Commands;
 using MediatR;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Application.Commands;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Shared.Domain;
-using MyApp.Shared.Application.Abstractions;
+using Shared.Application.Abstractions;
+using Shared.Domain.Common;
 
 internal sealed class SoftDeletePermissionHandler : IRequestHandler<SoftDeletePermissionCommand, Result>
 {

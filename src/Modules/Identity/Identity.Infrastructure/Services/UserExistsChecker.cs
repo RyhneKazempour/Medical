@@ -1,7 +1,7 @@
-namespace MyApp.Identity.Infrastructure.Services;
+namespace Identity.Infrastructure.Services;
 
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Contracts.Abstractions;
+using Identity.Application.Abstractions;
+using Identity.Contracts.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 

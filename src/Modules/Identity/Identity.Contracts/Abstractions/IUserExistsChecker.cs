@@ -1,6 +1,5 @@
-namespace MyApp.Identity.Contracts.Abstractions;
+namespace Identity.Contracts.Abstractions;
 
-using MyApp.Shared.Application.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 

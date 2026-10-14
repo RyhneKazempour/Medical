@@ -1,7 +1,7 @@
-namespace MyApp.Medical.Application.Validators;
+namespace Medical.Application.Validators;
 
 using FluentValidation;
-using MyApp.Medical.Application.Commands;
+using Medical.Application.Doctors.Commands.CreateDoctor;
 
 public sealed class CreateDoctorCommandValidator : AbstractValidator<CreateDoctorCommand>
 {

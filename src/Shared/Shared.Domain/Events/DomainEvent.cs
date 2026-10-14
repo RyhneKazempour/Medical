@@ -1,4 +1,4 @@
-namespace MyApp.Shared.Domain.Events;
+namespace Shared.Domain.Events;
 
 public abstract record DomainEvent(Guid EventId, DateTimeOffset OccurredAt)
 {

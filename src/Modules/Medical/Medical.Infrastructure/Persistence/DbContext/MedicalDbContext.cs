@@ -1,10 +1,10 @@
-namespace MyApp.Medical.Infrastructure.Persistence.DbContext;
+namespace Medical.Infrastructure.Persistence.DbContext;
 
+using Medical.Domain.Entities;
+using Medical.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Medical.Domain.Entities;
-using MyApp.Medical.Infrastructure.Persistence.Configurations;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Infrastructure.Persistence;
+using Shared.Application.Abstractions;
+using Shared.Infrastructure.Persistence;
 
 public sealed class MedicalDbContext : DbContext, IUnitOfWork
 {

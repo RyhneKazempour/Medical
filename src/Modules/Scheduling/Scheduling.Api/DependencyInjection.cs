@@ -1,4 +1,4 @@
-namespace MyApp.Scheduling.Api;
+namespace Scheduling.Api;
 
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;

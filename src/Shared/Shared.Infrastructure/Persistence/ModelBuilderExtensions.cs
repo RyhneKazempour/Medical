@@ -1,9 +1,9 @@
-namespace MyApp.Shared.Infrastructure.Persistence;
+namespace Shared.Infrastructure.Persistence;
 
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 public static class ModelBuilderExtensions
 {

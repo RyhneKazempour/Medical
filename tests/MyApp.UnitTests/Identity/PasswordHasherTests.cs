@@ -1,7 +1,7 @@
 namespace MyApp.UnitTests.Identity;
 
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Infrastructure.Authentication;
+using global::Identity.Application.Abstractions;
+using global::Identity.Infrastructure.Authentication;
 using Xunit;
 
 public class PasswordHasherTests

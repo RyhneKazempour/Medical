@@ -1,11 +1,11 @@
-namespace MyApp.Medical.Application.Commands;
+namespace Medical.Application.Doctors.Commands.CreateDoctor;
 
 using MediatR;
-using MyApp.Medical.Application.Abstractions;
-using MyApp.Medical.Domain.Entities;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
-using MyApp.Identity.Contracts.Abstractions;
+using Medical.Application.Abstractions;
+using Medical.Domain.Entities;
+using Shared.Domain.Common;
+using Shared.Application.Abstractions;
+using Identity.Contracts.Abstractions;
 
 public sealed class CreateDoctorHandler
     : IRequestHandler<CreateDoctorCommand, Result<Guid>>

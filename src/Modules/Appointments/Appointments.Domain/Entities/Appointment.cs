@@ -1,7 +1,6 @@
-namespace MyApp.Appointments.Domain.Entities;
+using Shared.Domain.Common;
 
-using MyApp.Shared.Domain;
-
+namespace Appointments.Domain.Entities;
 public enum AppointmentStatus
 {
     Reserved = 1,

@@ -1,4 +1,4 @@
-namespace MyApp.Billing.Application;
+namespace Billing.Application;
 
 using Microsoft.Extensions.DependencyInjection;
 

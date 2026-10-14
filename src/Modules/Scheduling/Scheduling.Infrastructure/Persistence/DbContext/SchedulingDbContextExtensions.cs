@@ -1,4 +1,4 @@
-namespace MyApp.Scheduling.Infrastructure.Persistence.DbContext;
+namespace Scheduling.Infrastructure.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

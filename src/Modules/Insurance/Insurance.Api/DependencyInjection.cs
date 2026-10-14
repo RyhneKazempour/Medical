@@ -1,4 +1,4 @@
-namespace MyApp.Insurance.Api;
+namespace Insurance.Api;
 
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;

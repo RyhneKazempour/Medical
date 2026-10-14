@@ -1,14 +1,13 @@
-namespace MyApp.Identity.Infrastructure.Authentication;
+namespace Identity.Infrastructure.Authentication;
 
 using System.Security.Cryptography;
+using Identity.Application.Abstractions;
+using Identity.Application.Authentication;
+using Identity.Domain.Entities;
+using Identity.Infrastructure.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using MyApp.Identity.Application.Abstractions;
-using MyApp.Identity.Application.Authentication;
-using MyApp.Identity.Domain.Entities;
-using MyApp.Identity.Infrastructure.Persistence.DbContext;
-using MyApp.Shared.Application.Abstractions;
-using MyApp.Shared.Domain;
+using Shared.Domain.Common;
 
 internal sealed class TokenService : ITokenService
 {
@@ -45,7 +44,7 @@ internal sealed class TokenService : ITokenService
         await _refreshTokenRepository.AddAsync(refreshTokenEntity.Value);
         await _context.SaveChangesAsync();
 
-        return new TokenPair(accessToken, refreshToken, (int)_jwtOptions.RefreshTokenExpirationDays * 24 * 60 * 60);
+        return new TokenPair(accessToken, refreshToken, _jwtOptions.RefreshTokenExpirationDays * 24 * 60 * 60);
     }
 
     public async Task<Result<TokenPair>> RefreshTokenAsync(string refreshToken, string? clientIpAddress, CancellationToken cancellationToken)
@@ -106,7 +105,7 @@ internal sealed class TokenService : ITokenService
         return Result<TokenPair>.Success(new TokenPair(
             newAccessToken,
             newRefreshToken,
-            (int)_jwtOptions.RefreshTokenExpirationDays * 24 * 60 * 60));
+            _jwtOptions.RefreshTokenExpirationDays * 24 * 60 * 60));
     }
 
     private static string GenerateRefreshToken()
